@@ -8,4 +8,9 @@
     <string name="betaling">Betaling</string>
     <string name="back">Back</string>
     <string name="velg_bilde_basert_paa">Velg bilde basert på</string>
+    <string name="antall_bilder_valgt">Antall bilder valgt: %1$s</string>
+    <string name="totalpris">Totalpris: %1$s</string>
+    <string name="til_betaling">Til betaling</string>
+    <string name="kategori">Kategori</string>
+    <string name="kunstner">Kunstner</string>
 </resources>
