@@ -94,7 +94,9 @@ fun ArtdealerApp(
         ) {
             composable (route = ArtScreen.Start.name) {
                 MainScreen(
-                    onNextButtonClicked = { /*TODO*/}
+                    onArtistButtonClicked = { /*TODO*/ },
+                    onCategoryButtonClicked = { /*TODO*/ },
+                    onPayButtonClicked = { /*TODO*/ },
                 )
             }
         }

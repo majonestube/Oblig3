@@ -1,5 +1,6 @@
 package com.example.oblig3.ui
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,24 +24,50 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.example.oblig3.R
+import com.example.oblig3.data.Artist
+import com.example.oblig3.data.Category
 import com.example.oblig3.data.Photo
 import com.example.oblig3.ui.theme.bodyFontFamily
 
 @Composable
 fun MainScreen(
-    onNextButtonClicked: (Int) -> Unit,
+    onArtistButtonClicked: (Int) -> Unit,
+    onCategoryButtonClicked: (Int) -> Unit,
+    onPayButtonClicked: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val testPhotoList: List<String> = listOf("1", "2", "3",
-        "4", "5", "6", "7", "8",
-        "9", "10", "11,", "12", "14", "4", "5", ",", ",", ",", ",", ",",
-        "9", "10", "11,", "12", "14", "4", "5", ",", ",", ",", ",", ",",
-        "9", "10", "11,", "12", "14", "4", "5", ",", ",", ",", ",", ",")
+    val testPhotoList: List<Photo> = listOf(
+        Photo(
+            id = 1,
+            title = "Nature 1",
+            imageResId = R.drawable.nature_1,
+            artist = Artist(
+                id = 1,
+                name = "John",
+                familyName = "Smith"
+            ),
+            category = Category.NATURE,
+            price = 0.6f
+        ),
+        Photo(
+            id = 2,
+            title = "Nature 2",
+            imageResId = R.drawable.nature_2,
+            artist = Artist(
+                id = 2,
+                name = "John",
+                familyName = "Smith"
+            ),
+            category = Category.NATURE,
+            price = 0.6f
+        )
+    )
 
     Column(
         modifier = modifier,
@@ -102,7 +129,11 @@ fun MainScreen(
                             modifier = Modifier.fillMaxWidth(),
                             contentAlignment = Alignment.Center
                         ) {
-                            Text(text = item)
+                            Image(
+                                painter = painterResource(item.imageResId) ,
+                                contentDescription = item.title,
+                                modifier = Modifier.fillMaxWidth(0.4f)
+                            )
                         }
                     }
                 }
