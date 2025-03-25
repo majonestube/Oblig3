@@ -9,7 +9,7 @@ data class Photo(
     val title: String = "",
     @DrawableRes
     val imageResId: Int,
-    val artist: Artist,
+    val artistId: Int,
     val category: Category,
     val price: Float = 0.0f
 )
