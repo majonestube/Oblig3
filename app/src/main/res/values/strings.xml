@@ -7,4 +7,5 @@
     <string name="detaljer">Detaljer</string>
     <string name="betaling">Betaling</string>
     <string name="back">Back</string>
+    <string name="velg_bilde_basert_paa">Velg bilde basert på</string>
 </resources>
