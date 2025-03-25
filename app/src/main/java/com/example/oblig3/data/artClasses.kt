@@ -1,4 +1,4 @@
-package com.example.oblig3.dataSource
+package com.example.oblig3.data
 
 import androidx.annotation.DrawableRes
 import androidx.compose.ui.graphics.Color

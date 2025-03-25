@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Oblig3</string>
+    <string name="main_title">Kunsthandler</string>
+    <string name="velg_kunstner">Velg kunstner</string>
+    <string name="velg_kategori">Velg kategori</string>
+    <string name="bilder">Bilder</string>
+    <string name="detaljer">Detaljer</string>
+    <string name="betaling">Betaling</string>
 </resources>
