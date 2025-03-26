@@ -156,7 +156,7 @@ fun MainScreen(
                                         text = item.frameWidth.toString()
                                     )
                                     Text(
-                                        text = item.photoPrice.toString()
+                                        text = (item.photoPrice * DataSource.PHOTO_PRICE).toString()
                                     )
                                 }
                                 Button(

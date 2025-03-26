@@ -3,6 +3,8 @@ package com.example.oblig3.data
 import com.example.oblig3.R
 
 object DataSource {
+    const val PHOTO_PRICE = 1000
+
     val Artists: List<Artist> = listOf(
         Artist(
             id = 1,
