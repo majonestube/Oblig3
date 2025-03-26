@@ -23,7 +23,8 @@ import com.example.oblig3.data.DataSource
 
 @Composable
 fun ArtistScreen (
-    onClick: (Long) -> Unit
+    viewModel: ArtViewModel,
+    onClick: () -> Unit
 ) {
     val artists: List<Artist> = DataSource.Artists
 
@@ -38,7 +39,9 @@ fun ArtistScreen (
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(dimensionResource(R.dimen.padding_medium))
-                        .clickable { onClick(item.id) },
+                        .clickable {
+                            viewModel.setArtist(item.id)
+                            onClick() },
                     shape = RoundedCornerShape(16.dp),
                     elevation = CardDefaults.cardElevation(
                         defaultElevation = 8.dp

@@ -105,8 +105,8 @@ fun ArtdealerApp(
 
             composable (route = ArtScreen.Artist.name) {
                 ArtistScreen(
-                    onClick = {artistId: Long ->
-                        viewModel.setArtist(artistId)
+                    viewModel = viewModel,
+                    onClick = {
                         navController.navigate(ArtScreen.PictureByArtist.name)
                     }
                 )
@@ -114,8 +114,8 @@ fun ArtdealerApp(
 
             composable (route = ArtScreen.Category.name) {
                 CategoryScreen(
-                    onClick = {categoryId: Category ->
-                        viewModel.setCategory(categoryId)
+                    viewModel = viewModel,
+                    onClick = {
                         navController.navigate(ArtScreen.PictureByCategory.name)
                     }
                 )
@@ -126,6 +126,7 @@ fun ArtdealerApp(
                     artistId = uiState.chosenArtist
                 )
             }
+
             composable (route = ArtScreen.PictureByCategory.name) {
                 PicturesByCategoryScreen(
                     categoryId = uiState.chosenCategory
