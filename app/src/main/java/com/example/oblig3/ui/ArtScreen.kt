@@ -1,10 +1,10 @@
 package com.example.oblig3.ui
 
+import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -14,12 +14,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -27,15 +25,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.oblig3.R
-import org.intellij.lang.annotations.PrintFormat
 
 enum class ArtScreen (@StringRes val title: Int) {
     Start(title = R.string.main_title),
     Artist(title = R.string.velg_kunstner),
     Category(title = R.string.velg_kategori),
-    Bilder(title = R.string.bilder),
-    Detaljer(title = R.string.detaljer),
-    Betaling(title = R.string.betaling)
+    PictureByArtist(title = R.string.bilder),
+    PictureByCategory(title = R.string.bilder),
+    Details(title = R.string.detaljer),
+    Payment(title = R.string.betaling)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -64,8 +62,6 @@ fun ArtdealerAppBar(
         }
     )
 }
-
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -105,13 +101,21 @@ fun ArtdealerApp(
 
             composable (route = ArtScreen.Artist.name) {
                 ArtistScreen(
-                    onClick = {/*TODO*/}
+                    onClick = {artistId: Long ->
+                        viewModel.setArtist(artistId)
+                        navController.navigate(ArtScreen.PictureByArtist.name)
+                    }
                 )
-
             }
 
             composable (route = ArtScreen.Category.name) {
                 CategoryScreen()
+            }
+
+            composable (route = ArtScreen.PictureByArtist.name) {
+                PicturesByArtistScreen(
+                    artistId = uiState.chosenArtist
+                )
             }
         }
     }
