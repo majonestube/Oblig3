@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -28,11 +29,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.oblig3.R
 import com.example.oblig3.data.Artist
 import com.example.oblig3.data.Category
 import com.example.oblig3.data.Photo
+import com.example.oblig3.ui.theme.Oblig3Theme
 import com.example.oblig3.ui.theme.bodyFontFamily
 
 @Composable
@@ -47,11 +50,7 @@ fun MainScreen(
             id = 1,
             title = "Nature 1",
             imageResId = R.drawable.nature_1,
-            artist = Artist(
-                id = 1,
-                name = "John",
-                familyName = "Smith"
-            ),
+            artistId = 1,
             category = Category.NATURE,
             price = 0.6f
         ),
@@ -59,11 +58,7 @@ fun MainScreen(
             id = 2,
             title = "Nature 2",
             imageResId = R.drawable.nature_2,
-            artist = Artist(
-                id = 2,
-                name = "John",
-                familyName = "Smith"
-            ),
+            artistId = 2,
             category = Category.NATURE,
             price = 0.6f
         )
@@ -92,7 +87,7 @@ fun MainScreen(
             )
             Row {
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = { onArtistButtonClicked(1) }, //TODO: Hardkodet "1" siden lambdaen krever (Int -> Unit)
                     modifier = Modifier.weight(1f)
                 ) {
                     Text(
@@ -101,7 +96,7 @@ fun MainScreen(
                 }
                 Spacer(modifier.width(dimensionResource(R.dimen.padding_small)))
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = { onCategoryButtonClicked(1) },//TODO: Hardkodet "1" siden lambdaen krever (Int -> Unit)
                     modifier = Modifier.weight(1f)
                 ) {
                     Text(
@@ -149,4 +144,10 @@ fun MainScreen(
         }
 
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun GreetingPreview() {
+    MainScreen({},{},{})
 }
