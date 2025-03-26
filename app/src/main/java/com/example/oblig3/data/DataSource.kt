@@ -26,6 +26,12 @@ object DataSource {
         ),
     )
 
+    val Categories: List<Category> = listOf(
+        Category.NATURE,
+        Category.FOOD,
+        Category.SPORT
+    )
+
     val PhotosForSale: List<Photo> = listOf(
         // Naturfotoer
         Photo(
@@ -136,5 +142,9 @@ object DataSource {
 
     fun photosByArtist(artistId: Long): List<Photo> {
         return PhotosForSale.filter { it.artistId == artistId }
+    }
+
+    fun photosByCategory(categoryId: Category): List<Photo> {
+        return PhotosForSale.filter { it.category == categoryId }
     }
 }

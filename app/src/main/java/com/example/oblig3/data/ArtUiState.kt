@@ -8,4 +8,5 @@ data class ArtUiState(
     val numberOfPicturesChosen: Int = 0,
     val price: String = "",
     val chosenArtist: Long = 0,
+    val chosenCategory: Category = Category.NATURE
 )

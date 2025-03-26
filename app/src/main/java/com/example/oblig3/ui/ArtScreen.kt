@@ -25,6 +25,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.oblig3.R
+import com.example.oblig3.data.Category
 
 enum class ArtScreen (@StringRes val title: Int) {
     Start(title = R.string.main_title),
@@ -109,7 +110,12 @@ fun ArtdealerApp(
             }
 
             composable (route = ArtScreen.Category.name) {
-                CategoryScreen()
+                CategoryScreen(
+                    onClick = {categoryId: Category ->
+                        viewModel.setCategory(categoryId)
+                        navController.navigate(ArtScreen.PictureByCategory.name)
+                    }
+                )
             }
 
             composable (route = ArtScreen.PictureByArtist.name) {
@@ -117,6 +123,12 @@ fun ArtdealerApp(
                     artistId = uiState.chosenArtist
                 )
             }
+            composable (route = ArtScreen.PictureByCategory.name) {
+                PicturesByCategoryScreen(
+                    categoryId = uiState.chosenCategory
+                )
+            }
+
         }
     }
 
