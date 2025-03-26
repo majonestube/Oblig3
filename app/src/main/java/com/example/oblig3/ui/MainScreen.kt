@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import com.example.oblig3.R
 import com.example.oblig3.data.Artist
 import com.example.oblig3.data.Category
+import com.example.oblig3.data.DataSource
 import com.example.oblig3.data.Photo
 import com.example.oblig3.ui.theme.Oblig3Theme
 import com.example.oblig3.ui.theme.bodyFontFamily
@@ -45,24 +46,7 @@ fun MainScreen(
     onPayButtonClicked: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val testPhotoList: List<Photo> = listOf(
-        Photo(
-            id = 1,
-            title = "Nature 1",
-            imageResId = R.drawable.nature_1,
-            artistId = 1,
-            category = Category.NATURE,
-            price = 0.6f
-        ),
-        Photo(
-            id = 2,
-            title = "Nature 2",
-            imageResId = R.drawable.nature_2,
-            artistId = 2,
-            category = Category.NATURE,
-            price = 0.6f
-        )
-    )
+    val testPhotoList: List<Photo> = DataSource.PhotosForSale
 
     Column(
         modifier = modifier,
