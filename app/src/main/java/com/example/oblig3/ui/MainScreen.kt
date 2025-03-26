@@ -14,7 +14,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,8 +32,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.oblig3.R
+import com.example.oblig3.data.Category
 import com.example.oblig3.data.DataSource
+import com.example.oblig3.data.FrameType
 import com.example.oblig3.data.Photo
+import com.example.oblig3.data.PhotoSize
+import com.example.oblig3.data.SelectedPhoto
 
 @Composable
 fun MainScreen(
@@ -37,7 +46,29 @@ fun MainScreen(
     onPayButtonClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val testPhotoList: List<Photo> = DataSource.PhotosForSale
+    val testPhotoList: List<SelectedPhoto> = listOf(
+        SelectedPhoto(
+            photoId = 1,
+            frameType = FrameType.METAL,
+            frameWidth = 30,
+            photoSize = PhotoSize.MEDIUM,
+            photoPrice = 0.6f
+        ),
+        SelectedPhoto(
+            photoId = 4,
+            frameType = FrameType.WOOD,
+            frameWidth = 50,
+            photoSize = PhotoSize.SMALL,
+            photoPrice = 0.2f
+        ),
+        SelectedPhoto(
+            photoId = 2,
+            frameType = FrameType.PLASTIC,
+            frameWidth = 20,
+            photoSize = PhotoSize.LARGE,
+            photoPrice = 1f
+        )
+    )
 
     Column(
         modifier = modifier,
@@ -95,15 +126,48 @@ fun MainScreen(
                         .heightIn(min = 0.dp, max = LocalConfiguration.current.screenHeightDp.dp * 0.55f)
                 ) {
                     items(testPhotoList) { item ->
-                        Box(
-                            modifier = Modifier.fillMaxWidth(),
-                            contentAlignment = Alignment.Center
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp)
                         ) {
-                            Image(
-                                painter = painterResource(item.imageResId) ,
-                                contentDescription = item.title,
-                                modifier = Modifier.fillMaxWidth(0.4f)
-                            )
+                            Row(
+                                horizontalArrangement = Arrangement.SpaceEvenly,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Column {
+                                    Text(
+                                        text = DataSource.PhotosForSale.filter { it.id == item.photoId }[0].title
+                                    )
+                                    Text(
+                                        text = DataSource.Artists.filter { it.id == item.photoId }[0].name
+                                    )
+                                }
+                                Column {
+                                    Text(
+                                        text = item.frameType.name
+                                    )
+                                    Text(
+                                        text = item.photoSize.name
+                                    )
+                                }
+                                Column {
+                                    Text(
+                                        text = item.frameWidth.toString()
+                                    )
+                                    Text(
+                                        text = item.photoPrice.toString()
+                                    )
+                                }
+                                Button(
+                                    onClick = { /*TODO*/ },
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Delete,
+                                        contentDescription = "Delete"
+                                    )
+                                }
+                            }
                         }
                     }
                 }
