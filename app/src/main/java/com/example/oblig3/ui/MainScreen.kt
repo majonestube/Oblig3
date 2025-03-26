@@ -31,6 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.oblig3.R
 import com.example.oblig3.data.Category
 import com.example.oblig3.data.DataSource
@@ -173,7 +174,7 @@ fun MainScreen(
                 }
             }
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { onPayButtonClicked() },
                 modifier = Modifier.fillMaxWidth(0.9f)
             ) {
                 Text(

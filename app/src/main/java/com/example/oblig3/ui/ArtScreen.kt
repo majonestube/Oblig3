@@ -1,6 +1,7 @@
 package com.example.oblig3.ui
 
 import android.util.Log
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -17,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -97,7 +99,7 @@ fun ArtdealerApp(
                 MainScreen(
                     onArtistButtonClicked = { navController.navigate(ArtScreen.Artist.name) },
                     onCategoryButtonClicked = { navController.navigate(ArtScreen.Category.name) },
-                    onPayButtonClicked = { /*TODO*/ },
+                    onPayButtonClicked = { navController.navigate(ArtScreen.Payment.name) },
                 )
             }
 
@@ -127,6 +129,14 @@ fun ArtdealerApp(
             composable (route = ArtScreen.PictureByCategory.name) {
                 PicturesByCategoryScreen(
                     categoryId = uiState.chosenCategory
+                )
+            }
+
+            composable(route = ArtScreen.Payment.name) {
+                PaymentScreen(
+                    onClick = {
+                        navController.navigate(ArtScreen.Start.name)
+                    }
                 )
             }
 
