@@ -1,8 +1,6 @@
 package com.example.oblig3.ui
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,26 +17,22 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import com.example.oblig3.R
-import com.example.oblig3.data.Category
 import com.example.oblig3.data.DataSource
 import com.example.oblig3.data.FrameType
-import com.example.oblig3.data.Photo
 import com.example.oblig3.data.PhotoSize
 import com.example.oblig3.data.SelectedPhoto
+import kotlin.math.roundToInt
 
 @Composable
 fun MainScreen(
@@ -113,11 +107,11 @@ fun MainScreen(
 
             }
             Text(
-                text = stringResource(R.string.antall_bilder_valgt, /*TODO*/),
+                text = stringResource(R.string.antall_bilder_valgt, testPhotoList.size), /*TODO*/
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = stringResource(R.string.totalpris, /*TODO*/),
+                text = stringResource(R.string.totalpris, testPhotoList.sumOf { it.photoPrice.toDouble() * DataSource.PHOTO_PRICE }.roundToInt()), /*TODO*/
                 fontWeight = FontWeight.Bold
             )
             if (testPhotoList.isNotEmpty()) {
