@@ -10,8 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.oblig3.R
 
 @Composable
 fun PaymentScreen(
@@ -26,7 +28,7 @@ fun PaymentScreen(
             .fillMaxWidth()
     ) {
         Text(
-            text = "Totalpris: ",
+            text = stringResource(R.string.totalpris),
             fontWeight = FontWeight.Bold
         )
         Text(
@@ -34,11 +36,12 @@ fun PaymentScreen(
             fontWeight = FontWeight.Bold
         )
         Text(
-            text = "Betalingsvalg"
+            text = stringResource(R.string.betalingsvalg)
         )
         Button(
             onClick = {
-                Toast.makeText(context, "Ikke implementert", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context,
+                    context.getString(R.string.ikke_implementert), Toast.LENGTH_SHORT).show()
                 onClick() },
             modifier = Modifier
                 .fillMaxWidth(0.8f)
@@ -46,7 +49,7 @@ fun PaymentScreen(
                 .align(Alignment.CenterHorizontally)
         ) {
             Text(
-                text = "Betal!"
+                text = stringResource(R.string.betal)
             )
         }
     }

@@ -88,7 +88,7 @@ fun MainScreen(
             )
             Row {
                 Button(
-                    onClick = { onArtistButtonClicked() }, //TODO: Hardkodet "1" siden lambdaen krever (Int -> Unit)
+                    onClick = { onArtistButtonClicked() },
                     modifier = Modifier.weight(1f)
                 ) {
                     Text(
@@ -97,7 +97,7 @@ fun MainScreen(
                 }
                 Spacer(modifier.width(dimensionResource(R.dimen.padding_small)))
                 Button(
-                    onClick = { onCategoryButtonClicked() },//TODO: Hardkodet "1" siden lambdaen krever (Int -> Unit)
+                    onClick = { onCategoryButtonClicked() },
                     modifier = Modifier.weight(1f)
                 ) {
                     Text(
@@ -111,7 +111,7 @@ fun MainScreen(
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = stringResource(R.string.totalpris, testPhotoList.sumOf { it.photoPrice.toDouble() * DataSource.PHOTO_PRICE }.roundToInt()), /*TODO*/
+                text = stringResource(R.string.totalpris_med_pris, testPhotoList.sumOf { it.photoPrice.toDouble() * DataSource.PHOTO_PRICE }.roundToInt()), /*TODO*/
                 fontWeight = FontWeight.Bold
             )
             if (testPhotoList.isNotEmpty()) {
@@ -159,7 +159,7 @@ fun MainScreen(
                                 ) {
                                     Icon(
                                         imageVector = Icons.Default.Delete,
-                                        contentDescription = "Delete"
+                                        contentDescription = stringResource(R.string.delete)
                                     )
                                 }
                             }

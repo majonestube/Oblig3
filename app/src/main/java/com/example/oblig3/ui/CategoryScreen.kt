@@ -18,7 +18,6 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
 import com.example.oblig3.R
-import com.example.oblig3.data.Artist
 import com.example.oblig3.data.Category
 import com.example.oblig3.data.DataSource
 
