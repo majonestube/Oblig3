@@ -104,7 +104,9 @@ fun ArtdealerApp(
             }
 
             composable (route = ArtScreen.Artist.name) {
-                ArtistScreen()
+                ArtistScreen(
+                    onClick = {/*TODO*/}
+                )
 
             }
 

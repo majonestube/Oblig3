@@ -132,7 +132,9 @@ object DataSource {
             category = Category.SPORT,
             price = 0.4f
         ),
-
     )
 
+    fun photosByArtist(artistId: Long): List<Photo> {
+        return PhotosForSale.filter { it.artistId == artistId }
+    }
 }
