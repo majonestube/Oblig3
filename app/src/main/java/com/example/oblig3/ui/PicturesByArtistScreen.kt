@@ -1,6 +1,7 @@
 package com.example.oblig3.ui
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
@@ -17,7 +18,10 @@ import com.example.oblig3.data.DataSource
 import com.example.oblig3.data.Photo
 
 @Composable
-fun PicturesByArtistScreen(artistId: Long) {
+fun PicturesByArtistScreen(
+    artistId: Long,
+    onClick: (Photo) -> Unit
+    ) {
     val pictures: List<Photo> = DataSource.photosByArtist(artistId)
 
     if (pictures.isNotEmpty()) {
@@ -28,7 +32,9 @@ fun PicturesByArtistScreen(artistId: Long) {
         ) {
             items(pictures) { item ->
                 Box(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onClick(item) },
                     contentAlignment = Alignment.Center
                 ) {
                     Image(

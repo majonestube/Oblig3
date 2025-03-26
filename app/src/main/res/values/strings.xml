@@ -13,4 +13,10 @@
     <string name="til_betaling">Til betaling</string>
     <string name="kategori">Kategori</string>
     <string name="kunstner">Kunstner</string>
+    <string name="bildestørrelse_liten">LITEN</string>
+    <string name="bildestørrelse_medium">MEDIUM</string>
+    <string name="bildestørrelse_stor">STOR</string>
+    <string name="rammetype_tre">TRE</string>
+    <string name="rammetype_metal">METAL</string>
+    <string name="rammetype_plastikk">PLASTIKK</string>
 </resources>
