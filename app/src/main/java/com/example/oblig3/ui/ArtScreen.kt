@@ -106,6 +106,9 @@ fun ArtdealerApp(
                     picturesChosen = uiState.picturesChosen,
                     onArtistButtonClicked = { navController.navigate(ArtScreen.Artist.name) },
                     onCategoryButtonClicked = { navController.navigate(ArtScreen.Category.name) },
+                    onDeleteButtonClicked = { selectedPhoto: SelectedPhoto ->
+                        viewModel.deletePhoto(selectedPhoto)
+                    },
                     onPayButtonClicked = { navController.navigate(ArtScreen.Payment.name) },
                 )
             }

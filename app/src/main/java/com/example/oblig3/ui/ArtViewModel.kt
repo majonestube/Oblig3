@@ -25,6 +25,16 @@ class ArtViewModel: ViewModel() {
         }
     }
 
+    fun deletePhoto(
+        photo: SelectedPhoto
+    ) {
+        _uiState.update { currentScreen ->
+            currentScreen.copy(
+                picturesChosen = currentScreen.picturesChosen - photo
+            )
+        }
+    }
+
     // Set the selected artist
     fun setArtist(artistId: Long) {
         _uiState.update { currentState ->

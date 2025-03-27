@@ -38,6 +38,7 @@ fun MainScreen(
     picturesChosen: List<SelectedPhoto>,
     onArtistButtonClicked: () -> Unit,
     onCategoryButtonClicked: () -> Unit,
+    onDeleteButtonClicked: (SelectedPhoto) -> Unit,
     onPayButtonClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -146,7 +147,15 @@ fun MainScreen(
                                     )
                                 }
                                 Button(
-                                    onClick = { /*TODO*/ },
+                                    onClick = {
+                                        onDeleteButtonClicked(SelectedPhoto(
+                                            photoId = item.photoId,
+                                            frameType = item.frameType,
+                                            frameWidth = item.frameWidth,
+                                            photoSize = item.photoSize,
+                                            photoPrice = item.photoPrice
+                                        ))
+                                    },
                                 ) {
                                     Icon(
                                         imageVector = Icons.Default.Delete,
