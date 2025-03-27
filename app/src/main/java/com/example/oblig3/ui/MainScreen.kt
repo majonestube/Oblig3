@@ -19,51 +19,28 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.oblig3.R
 import com.example.oblig3.data.DataSource
-import com.example.oblig3.data.FrameType
-import com.example.oblig3.data.PhotoSize
 import com.example.oblig3.data.SelectedPhoto
 import kotlin.math.roundToInt
 
 @Composable
 fun MainScreen(
+    picturesChosen: List<SelectedPhoto>,
     onArtistButtonClicked: () -> Unit,
     onCategoryButtonClicked: () -> Unit,
     onPayButtonClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val testPhotoList: List<SelectedPhoto> = listOf(
-        SelectedPhoto(
-            photoId = 1,
-            frameType = FrameType.METAL,
-            frameWidth = 30,
-            photoSize = PhotoSize.MEDIUM,
-            photoPrice = 0.6f
-        ),
-        SelectedPhoto(
-            photoId = 4,
-            frameType = FrameType.WOOD,
-            frameWidth = 50,
-            photoSize = PhotoSize.SMALL,
-            photoPrice = 0.2f
-        ),
-        SelectedPhoto(
-            photoId = 2,
-            frameType = FrameType.PLASTIC,
-            frameWidth = 20,
-            photoSize = PhotoSize.LARGE,
-            photoPrice = 1f
-        )
-    )
 
     Column(
         modifier = modifier,
@@ -107,20 +84,20 @@ fun MainScreen(
 
             }
             Text(
-                text = stringResource(R.string.antall_bilder_valgt, testPhotoList.size), /*TODO*/
+                text = stringResource(R.string.antall_bilder_valgt, picturesChosen.size), /*TODO*/
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = stringResource(R.string.totalpris_med_pris, testPhotoList.sumOf { it.photoPrice.toDouble() * DataSource.PHOTO_PRICE }.roundToInt()), /*TODO*/
+                text = stringResource(R.string.totalpris_med_pris, picturesChosen.sumOf { it.photoPrice.toDouble() * DataSource.PHOTO_PRICE }.roundToInt()), /*TODO*/
                 fontWeight = FontWeight.Bold
             )
-            if (testPhotoList.isNotEmpty()) {
+            if (picturesChosen.isNotEmpty()) {
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(1),
                     modifier = Modifier
                         .heightIn(min = 0.dp, max = LocalConfiguration.current.screenHeightDp.dp * 0.55f)
                 ) {
-                    items(testPhotoList) { item ->
+                    items(picturesChosen) { item ->
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -178,10 +155,4 @@ fun MainScreen(
         }
 
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MainScreen({},{},{})
 }

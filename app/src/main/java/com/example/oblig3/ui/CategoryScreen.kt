@@ -23,8 +23,7 @@ import com.example.oblig3.data.DataSource
 
 @Composable
 fun CategoryScreen (
-    viewModel: ArtViewModel,
-    onClick: () -> Unit
+    onClick: (Category) -> Unit
 ) {
     val category: List<Category> = DataSource.Categories
 
@@ -40,8 +39,7 @@ fun CategoryScreen (
                         .fillMaxWidth()
                         .padding(dimensionResource(R.dimen.padding_medium))
                         .clickable {
-                            viewModel.setCategory(Category.valueOf(item.name))
-                            onClick() },
+                            onClick(Category.valueOf(item.name)) },
                     shape = RoundedCornerShape(16.dp),
                     elevation = CardDefaults.cardElevation(
                         defaultElevation = 8.dp

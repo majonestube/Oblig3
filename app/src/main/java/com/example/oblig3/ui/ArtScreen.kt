@@ -29,6 +29,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.oblig3.R
 import com.example.oblig3.data.Category
 import com.example.oblig3.data.Photo
+import com.example.oblig3.data.SelectedPhoto
 
 enum class ArtScreen (@StringRes val title: Int) {
     Start(title = R.string.main_title),
@@ -98,6 +99,7 @@ fun ArtdealerApp(
         ) {
             composable (route = ArtScreen.Start.name) {
                 MainScreen(
+                    picturesChosen = uiState.picturesChosen,
                     onArtistButtonClicked = { navController.navigate(ArtScreen.Artist.name) },
                     onCategoryButtonClicked = { navController.navigate(ArtScreen.Category.name) },
                     onPayButtonClicked = { navController.navigate(ArtScreen.Payment.name) },
@@ -106,8 +108,8 @@ fun ArtdealerApp(
 
             composable (route = ArtScreen.Artist.name) {
                 ArtistScreen(
-                    viewModel = viewModel,
-                    onClick = {
+                    onClick = {artistId: Long ->
+                        viewModel.setArtist(artistId)
                         navController.navigate(ArtScreen.PictureByArtist.name)
                     }
                 )
@@ -115,8 +117,8 @@ fun ArtdealerApp(
 
             composable (route = ArtScreen.Category.name) {
                 CategoryScreen(
-                    viewModel = viewModel,
-                    onClick = {
+                    onClick = {category: Category ->
+                        viewModel.setCategory(category)
                         navController.navigate(ArtScreen.PictureByCategory.name)
                     }
                 )
@@ -142,11 +144,27 @@ fun ArtdealerApp(
                     }
                 )
             }
+
             composable (route=ArtScreen.Details.name) {
                 Details(
-                    photo = uiState.chosenPhoto,
-                    viewModel = viewModel
-
+                    photo = uiState.chosenPhoto, /* TODO*/ // Nødvendig?
+                    viewModel = viewModel,
+                    onAddPhoto = {
+                        viewModel.addPhoto(
+                            SelectedPhoto(
+                                photoId = uiState.chosenPhoto.id,
+                                frameType = uiState.chosenFrameMaterial,
+                                frameWidth = uiState.chosenFrameSize,
+                                photoSize = uiState.chosenPhotoSize,
+                                photoPrice = uiState.chosenPhoto.price
+                            )
+                        )
+                    },
+                    onClick = {
+                        navController.navigate(ArtScreen.Start.name)
+                    }
+                )
+            }
 
             composable(route = ArtScreen.Payment.name) {
                 PaymentScreen(
@@ -156,9 +174,6 @@ fun ArtdealerApp(
                 )
             }
 
-
-                )
-            }
         }
     }
 }
