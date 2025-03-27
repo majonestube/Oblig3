@@ -1,6 +1,7 @@
 package com.example.oblig3.ui
 
 import android.util.Log
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -17,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -65,6 +67,7 @@ fun ArtdealerAppBar(
     )
 }
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArtdealerApp(
@@ -97,14 +100,14 @@ fun ArtdealerApp(
                 MainScreen(
                     onArtistButtonClicked = { navController.navigate(ArtScreen.Artist.name) },
                     onCategoryButtonClicked = { navController.navigate(ArtScreen.Category.name) },
-                    onPayButtonClicked = { /*TODO*/ },
+                    onPayButtonClicked = { navController.navigate(ArtScreen.Payment.name) },
                 )
             }
 
             composable (route = ArtScreen.Artist.name) {
                 ArtistScreen(
-                    onClick = {artistId: Long ->
-                        viewModel.setArtist(artistId)
+                    viewModel = viewModel,
+                    onClick = {
                         navController.navigate(ArtScreen.PictureByArtist.name)
                     }
                 )
@@ -112,8 +115,8 @@ fun ArtdealerApp(
 
             composable (route = ArtScreen.Category.name) {
                 CategoryScreen(
-                    onClick = {categoryId: Category ->
-                        viewModel.setCategory(categoryId)
+                    viewModel = viewModel,
+                    onClick = {
                         navController.navigate(ArtScreen.PictureByCategory.name)
                     }
                 )
@@ -129,6 +132,7 @@ fun ArtdealerApp(
                     }
                 )
             }
+
             composable (route = ArtScreen.PictureByCategory.name) {
                 PicturesByCategoryScreen(
                     categoryId = uiState.chosenCategory,
@@ -142,6 +146,16 @@ fun ArtdealerApp(
                 Details(
                     photo = uiState.chosenPhoto,
                     viewModel = viewModel
+
+
+            composable(route = ArtScreen.Payment.name) {
+                PaymentScreen(
+                    onClick = {
+                        navController.navigate(ArtScreen.Start.name)
+                    }
+                )
+            }
+
 
                 )
             }

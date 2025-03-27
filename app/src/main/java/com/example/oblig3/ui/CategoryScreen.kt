@@ -18,13 +18,13 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
 import com.example.oblig3.R
-import com.example.oblig3.data.Artist
 import com.example.oblig3.data.Category
 import com.example.oblig3.data.DataSource
 
 @Composable
 fun CategoryScreen (
-    onClick: (Category) -> Unit
+    viewModel: ArtViewModel,
+    onClick: () -> Unit
 ) {
     val category: List<Category> = DataSource.Categories
 
@@ -39,7 +39,9 @@ fun CategoryScreen (
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(dimensionResource(R.dimen.padding_medium))
-                        .clickable { onClick(item) },
+                        .clickable {
+                            viewModel.setCategory(Category.valueOf(item.name))
+                            onClick() },
                     shape = RoundedCornerShape(16.dp),
                     elevation = CardDefaults.cardElevation(
                         defaultElevation = 8.dp
