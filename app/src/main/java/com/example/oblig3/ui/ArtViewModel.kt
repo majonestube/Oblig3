@@ -12,6 +12,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
+private const val EXTRA_PRICE = 200
+
 class ArtViewModel: ViewModel() {
     private val _uiState = MutableStateFlow(ArtUiState())
     val uiState: StateFlow<ArtUiState> = _uiState.asStateFlow()

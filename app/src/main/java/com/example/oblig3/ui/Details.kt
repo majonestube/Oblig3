@@ -3,6 +3,7 @@ package com.example.oblig3.ui
 import android.telecom.Call.Details
 import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.content.MediaType.Companion.Text
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
@@ -23,7 +25,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role.Companion.Image
@@ -68,7 +74,13 @@ fun Details(
                 Image(
                     painter = painterResource(photo.imageResId),
                     contentDescription = photo.title,
-                    modifier = Modifier.fillMaxWidth(0.4f),
+                    modifier = Modifier
+                        .fillMaxWidth(0.4f)
+                        .border(
+                            width = chosenFrameSize.dp,
+                            brush = SolidColor(chosenFrameType.color),
+                            shape = CutCornerShape(12.dp),
+                        ),
                 )
             }
         }
