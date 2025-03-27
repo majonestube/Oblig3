@@ -28,7 +28,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.oblig3.R
 import com.example.oblig3.data.Category
+import com.example.oblig3.data.FrameType
 import com.example.oblig3.data.Photo
+import com.example.oblig3.data.PhotoSize
 import com.example.oblig3.data.SelectedPhoto
 
 enum class ArtScreen (@StringRes val title: Int) {
@@ -147,8 +149,19 @@ fun ArtdealerApp(
 
             composable (route=ArtScreen.Details.name) {
                 Details(
-                    photo = uiState.chosenPhoto, /* TODO*/ // Nødvendig?
-                    viewModel = viewModel,
+                    photo = uiState.chosenPhoto,
+                    chosenFrameType = uiState.chosenFrameMaterial,
+                    chosenFrameSize = uiState.chosenFrameSize,
+                    chosenPhotoSize = uiState.chosenPhotoSize,/* TODO*/ // Nødvendig?
+                    onChoosePhotoSize = { photoSize: PhotoSize ->
+                        viewModel.setPhotoSizeOption(photoSize)
+                    },
+                    onChooseFrameType = { frameType: FrameType ->
+                        viewModel.setFrameMaterialOption(frameType)
+                    },
+                    onChooseFrameSize = { frameSize: Int ->
+                        viewModel.setFrameSizeOption(frameSize)
+                    },
                     onAddPhoto = {
                         viewModel.addPhoto(
                             SelectedPhoto(
@@ -160,8 +173,10 @@ fun ArtdealerApp(
                             )
                         )
                     },
-                    onClick = {
-                        navController.navigate(ArtScreen.Start.name)
+                    onDoneClick = {
+                        if (navController.currentDestination?.route != ArtScreen.Start.name) {
+                            navController.navigate(ArtScreen.Start.name)
+                        }
                     }
                 )
             }

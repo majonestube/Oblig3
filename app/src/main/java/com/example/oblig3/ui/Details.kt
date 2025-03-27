@@ -43,15 +43,17 @@ import com.example.oblig3.ui.theme.Oblig3Theme
 @Composable
 fun Details(
     photo: Photo,
+    chosenFrameType: FrameType,
+    chosenFrameSize: Int,
+    chosenPhotoSize: PhotoSize,
+    onChoosePhotoSize: (PhotoSize) -> Unit,
+    onChooseFrameType: (FrameType) -> Unit,
+    onChooseFrameSize: (Int) -> Unit,
     onAddPhoto: () -> Unit,
-    onClick: () -> Unit,
-    viewModel: ArtViewModel
+    onDoneClick: () -> Unit,
 ) {
-    val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
-    val chosenFrameType = uiState.chosenFrameMaterial
-    val chosenFrameSize = uiState.chosenFrameSize
-    val chosenPhotoSize = uiState.chosenPhotoSize
+
 
     Column(modifier = Modifier.fillMaxSize()) {
         Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
@@ -79,14 +81,14 @@ fun Details(
                 modifier = Modifier.padding(8.dp)) {
                 RadioButton(
                     selected = chosenFrameType == FrameType.WOOD,
-                    onClick = {viewModel.setFrameMaterialOption(FrameType.WOOD)}
+                    onClick = { onChooseFrameType(FrameType.WOOD)}
                 )
                 Text(
                     text = stringResource(R.string.rammetype_tre)
                 )
                 RadioButton(
                     selected = chosenPhotoSize == PhotoSize.SMALL,
-                    onClick = {viewModel.setPhotoSizeOption(PhotoSize.SMALL)})
+                    onClick = {onChoosePhotoSize(PhotoSize.SMALL)})
                 Text(
                     text = stringResource(R.string.bildestørrelse_liten)
                 )
@@ -97,12 +99,12 @@ fun Details(
                     .fillMaxWidth()
             ) {
                 RadioButton(selected = chosenFrameType == FrameType.METAL,
-                    onClick = {viewModel.setFrameMaterialOption(FrameType.METAL)})
+                    onClick = {onChooseFrameType(FrameType.METAL)})
                 Text(
                     text = stringResource(R.string.rammetype_metal)
                 )
                 RadioButton(selected = chosenPhotoSize == PhotoSize.MEDIUM,
-                    onClick = {viewModel.setPhotoSizeOption(PhotoSize.MEDIUM)})
+                    onClick = {onChoosePhotoSize(PhotoSize.MEDIUM)})
                 Text(
                     text = stringResource(R.string.bildestørrelse_medium)
                 )
@@ -111,12 +113,12 @@ fun Details(
                 modifier = Modifier.padding(8.dp)
             ) {
                 RadioButton(selected = chosenFrameType == FrameType.PLASTIC,
-                    onClick = {viewModel.setFrameMaterialOption(FrameType.PLASTIC)})
+                    onClick = {onChooseFrameType(FrameType.PLASTIC)})
                 Text(
                     text = stringResource(R.string.rammetype_plastikk)
                 )
                 RadioButton(selected = chosenPhotoSize == PhotoSize.LARGE,
-                    onClick = {viewModel.setPhotoSizeOption(PhotoSize.LARGE)})
+                    onClick = {onChoosePhotoSize(PhotoSize.LARGE)})
                 Text(
                     text = stringResource(R.string.bildestørrelse_stor)
                 )
@@ -134,19 +136,19 @@ fun Details(
         ) {
             RadioButton(
                 selected = chosenFrameSize == FrameSize.SMALL.size,
-                onClick = {viewModel.setFrameSizeOption(FrameSize.SMALL.size)})
+                onClick = {onChooseFrameSize(FrameSize.SMALL.size)})
             Text(
                 text = FrameSize.SMALL.size.toString()
             )
             RadioButton(
                 selected = chosenFrameSize == FrameSize.MEDIUM.size,
-                onClick = {viewModel.setFrameSizeOption(FrameSize.MEDIUM.size)})
+                onClick = {onChooseFrameSize(FrameSize.MEDIUM.size)})
             Text(
                 text = FrameSize.MEDIUM.size.toString()
             )
             RadioButton(
                 selected = chosenFrameSize == FrameSize.LARGE.size,
-                onClick = {viewModel.setFrameSizeOption(FrameSize.LARGE.size)})
+                onClick = {onChooseFrameSize(FrameSize.LARGE.size)})
             Text(
                 text = FrameSize.LARGE.size.toString()
             )
@@ -158,7 +160,7 @@ fun Details(
                     onAddPhoto()
                     Toast.makeText(context,
                         context.getString(R.string.lagt_i_handlekurv), Toast.LENGTH_SHORT).show()
-                    onClick()
+                    onDoneClick()
                 }
             ) {
                 Text(stringResource(R.string.legg_i_handlekurv))

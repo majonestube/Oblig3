@@ -108,12 +108,19 @@ fun MainScreen(
                                 modifier = Modifier.fillMaxWidth()
                             ) {
                                 Column {
-                                    Text(
-                                        text = DataSource.PhotosForSale.filter { it.id == item.photoId }[0].title
-                                    )
-                                    Text(
-                                        text = DataSource.Artists.filter { it.id == item.photoId }[0].name
-                                    )
+                                    val photo = DataSource.PhotosForSale.find { it.id == item.photoId }
+                                    val artist = DataSource.Artists.find { it.id == item.photoId }
+                                    if (photo != null) {
+                                        Text(
+                                            text = photo.title
+                                        )
+                                    if (artist != null) {
+                                        Text(
+                                            text = artist.name
+                                        )
+                                    }
+                                }
+
                                 }
                                 Column {
                                     Text(
