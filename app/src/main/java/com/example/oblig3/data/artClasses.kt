@@ -45,3 +45,9 @@ enum class PhotoSize(val extraPrice: Float, val size: Int = 170) {
     MEDIUM(130f, size=200),
     LARGE(230f, size=250)
 }
+
+enum class FrameSize(val extraPrice: Float, val size: Int = 170) {
+    SMALL(0f, size=10),
+    MEDIUM(130f, size=15),
+    LARGE(230f, size=20)
+}

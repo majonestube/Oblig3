@@ -19,4 +19,10 @@
     <string name="betalingsvalg">Betalingsvalg</string>
     <string name="ikke_implementert">Ikke implementert</string>
     <string name="betal">Betal!</string>
+    <string name="bildestørrelse_liten">LITEN</string>
+    <string name="bildestørrelse_medium">MEDIUM</string>
+    <string name="bildestørrelse_stor">STOR</string>
+    <string name="rammetype_tre">TRE</string>
+    <string name="rammetype_metal">METAL</string>
+    <string name="rammetype_plastikk">PLASTIKK</string>
 </resources>

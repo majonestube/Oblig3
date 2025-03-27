@@ -3,6 +3,9 @@ package com.example.oblig3.ui
 import androidx.lifecycle.ViewModel
 import com.example.oblig3.data.ArtUiState
 import com.example.oblig3.data.Category
+import com.example.oblig3.data.FrameType
+import com.example.oblig3.data.Photo
+import com.example.oblig3.data.PhotoSize
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -29,4 +32,37 @@ class ArtViewModel: ViewModel() {
             )
         }
     }
+
+    fun setPhoto(photo: Photo) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                chosenPhoto = photo
+            )
+        }
+    }
+
+    fun setFrameMaterialOption(option: FrameType) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                chosenFrameMaterial = option
+            )
+        }
+    }
+
+    fun setFrameSizeOption(option: Int) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                chosenFrameSize = option
+            )
+        }
+    }
+
+    fun setPhotoSizeOption(option: PhotoSize) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                chosenPhotoSize = option
+            )
+        }
+    }
+
 }
