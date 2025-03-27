@@ -1,7 +1,9 @@
 package com.example.oblig3.ui
 
 import android.telecom.Call.Details
+import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.content.MediaType.Companion.Text
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,7 +15,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -22,9 +26,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role.Companion.Image
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -34,15 +44,24 @@ import com.example.oblig3.data.FrameSize
 import com.example.oblig3.data.FrameType
 import com.example.oblig3.data.Photo
 import com.example.oblig3.data.PhotoSize
+import com.example.oblig3.data.SelectedPhoto
 import com.example.oblig3.ui.theme.Oblig3Theme
 
 
 @Composable
 fun Details(
     photo: Photo,
-    viewModel: ArtViewModel
+    chosenFrameType: FrameType,
+    chosenFrameSize: Int,
+    chosenPhotoSize: PhotoSize,
+    onChoosePhotoSize: (PhotoSize) -> Unit,
+    onChooseFrameType: (FrameType) -> Unit,
+    onChooseFrameSize: (Int) -> Unit,
+    onAddPhoto: () -> Unit,
+    onDoneClick: () -> Unit,
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val context = LocalContext.current
+
 
     Column(modifier = Modifier.fillMaxSize()) {
         Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
@@ -57,41 +76,49 @@ fun Details(
                 Image(
                     painter = painterResource(photo.imageResId),
                     contentDescription = photo.title,
-                    modifier = Modifier.fillMaxWidth(0.4f),
+                    modifier = Modifier
+                        .fillMaxWidth(0.4f)
+                        .border(
+                            width = chosenFrameSize.dp,
+                            brush = SolidColor(chosenFrameType.color),
+                            shape = CutCornerShape(12.dp),
+                        ),
                 )
             }
         }
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = "Velg ramme og størrelse"
+            text = stringResource(R.string.velg_ramme_og_st_rrelse)
         )
         Column() {
             Row( verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(8.dp)) {
                 RadioButton(
-                    selected = uiState.chosenFrameMaterial == FrameType.WOOD,
-                    onClick = {viewModel.setFrameMaterialOption(FrameType.WOOD)}
+                    selected = chosenFrameType == FrameType.WOOD,
+                    onClick = { onChooseFrameType(FrameType.WOOD)}
                 )
                 Text(
                     text = stringResource(R.string.rammetype_tre)
                 )
                 RadioButton(
-                    selected = uiState.chosenPhotoSize == PhotoSize.SMALL,
-                    onClick = {viewModel.setPhotoSizeOption(PhotoSize.SMALL)})
+                    selected = chosenPhotoSize == PhotoSize.SMALL,
+                    onClick = {onChoosePhotoSize(PhotoSize.SMALL)})
                 Text(
                     text = stringResource(R.string.bildestørrelse_liten)
                 )
             }
             Row( verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(8.dp).fillMaxWidth()
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxWidth()
             ) {
-                RadioButton(selected = uiState.chosenFrameMaterial == FrameType.METAL,
-                    onClick = {viewModel.setFrameMaterialOption(FrameType.METAL)})
+                RadioButton(selected = chosenFrameType == FrameType.METAL,
+                    onClick = {onChooseFrameType(FrameType.METAL)})
                 Text(
                     text = stringResource(R.string.rammetype_metal)
                 )
-                RadioButton(selected = uiState.chosenPhotoSize == PhotoSize.MEDIUM,
-                    onClick = {viewModel.setPhotoSizeOption(PhotoSize.MEDIUM)})
+                RadioButton(selected = chosenPhotoSize == PhotoSize.MEDIUM,
+                    onClick = {onChoosePhotoSize(PhotoSize.MEDIUM)})
                 Text(
                     text = stringResource(R.string.bildestørrelse_medium)
                 )
@@ -99,13 +126,13 @@ fun Details(
             Row( verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(8.dp)
             ) {
-                RadioButton(selected = uiState.chosenFrameMaterial == FrameType.PLASTIC,
-                    onClick = {viewModel.setFrameMaterialOption(FrameType.PLASTIC)})
+                RadioButton(selected = chosenFrameType == FrameType.PLASTIC,
+                    onClick = {onChooseFrameType(FrameType.PLASTIC)})
                 Text(
                     text = stringResource(R.string.rammetype_plastikk)
                 )
-                RadioButton(selected = uiState.chosenPhotoSize == PhotoSize.LARGE,
-                    onClick = {viewModel.setPhotoSizeOption(PhotoSize.LARGE)})
+                RadioButton(selected = chosenPhotoSize == PhotoSize.LARGE,
+                    onClick = {onChoosePhotoSize(PhotoSize.LARGE)})
                 Text(
                     text = stringResource(R.string.bildestørrelse_stor)
                 )
@@ -113,7 +140,7 @@ fun Details(
         }
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = "Velg rammebredde"
+            text = stringResource(R.string.velg_rammebredde)
         )
         
         Row( verticalAlignment = Alignment.CenterVertically,
@@ -121,34 +148,56 @@ fun Details(
                 .padding(8.dp)
                 .fillMaxWidth()
         ) {
-            RadioButton(selected = uiState.chosenFrameSize == FrameSize.SMALL.size,
-                onClick = {viewModel.setFrameSizeOption(FrameSize.SMALL.size)})
+            RadioButton(
+                selected = chosenFrameSize == FrameSize.SMALL.size,
+                onClick = {onChooseFrameSize(FrameSize.SMALL.size)})
             Text(
                 text = FrameSize.SMALL.size.toString()
             )
-            RadioButton(selected = uiState.chosenFrameSize == FrameSize.MEDIUM.size,
-                onClick = {viewModel.setFrameSizeOption(FrameSize.MEDIUM.size)})
+            RadioButton(
+                selected = chosenFrameSize == FrameSize.MEDIUM.size,
+                onClick = {onChooseFrameSize(FrameSize.MEDIUM.size)})
             Text(
                 text = FrameSize.MEDIUM.size.toString()
             )
-            RadioButton(selected = uiState.chosenFrameSize == FrameSize.LARGE.size,
-                onClick = {viewModel.setFrameSizeOption(FrameSize.LARGE.size)})
+            RadioButton(
+                selected = chosenFrameSize == FrameSize.LARGE.size,
+                onClick = {onChooseFrameSize(FrameSize.LARGE.size)})
             Text(
                 text = FrameSize.LARGE.size.toString()
+            )
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Text(
+                text = "Pris: ",
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = "XXX" /*TODO*/
             )
         }
         Row() {
             Button(
                 modifier = Modifier.weight(1f),
-                onClick = {}
+                onClick = {
+                    onAddPhoto()
+                    Toast.makeText(context,
+                        context.getString(R.string.lagt_i_handlekurv), Toast.LENGTH_SHORT).show()
+                    onDoneClick()
+                }
             ) {
-                Text("Legg i handlekurv")
+                Text(stringResource(R.string.legg_i_handlekurv))
             }
             Button(
                 modifier = Modifier.weight(1f),
-                onClick = {}
+                onClick = { /*TODO*/ }
             ) {
-                Text("Hjem")
+                Text(stringResource(R.string.hjem))
             }
         }
     }

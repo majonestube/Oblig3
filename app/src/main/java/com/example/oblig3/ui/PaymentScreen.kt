@@ -17,9 +17,10 @@ import com.example.oblig3.R
 
 @Composable
 fun PaymentScreen(
+    price: Int,
+    onPayButtonClicked: () -> Unit,
     onClick: () -> Unit
 ) {
-    val price = 667
     val context = LocalContext.current
 
     Column(
@@ -42,6 +43,7 @@ fun PaymentScreen(
             onClick = {
                 Toast.makeText(context,
                     context.getString(R.string.ikke_implementert), Toast.LENGTH_SHORT).show()
+                onPayButtonClicked()
                 onClick() },
             modifier = Modifier
                 .fillMaxWidth(0.8f)

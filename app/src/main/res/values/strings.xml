@@ -25,4 +25,9 @@
     <string name="rammetype_tre">TRE</string>
     <string name="rammetype_metal">METAL</string>
     <string name="rammetype_plastikk">PLASTIKK</string>
+    <string name="legg_i_handlekurv">Legg i handlekurv</string>
+    <string name="hjem">Hjem</string>
+    <string name="velg_rammebredde">Velg rammebredde</string>
+    <string name="velg_ramme_og_st_rrelse">Velg ramme og størrelse</string>
+    <string name="lagt_i_handlekurv">Lagt i handlekurv!</string>
 </resources>

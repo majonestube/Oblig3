@@ -28,7 +28,12 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.oblig3.R
 import com.example.oblig3.data.Category
+import com.example.oblig3.data.DataSource
+import com.example.oblig3.data.FrameType
 import com.example.oblig3.data.Photo
+import com.example.oblig3.data.PhotoSize
+import com.example.oblig3.data.SelectedPhoto
+import kotlin.math.roundToInt
 
 enum class ArtScreen (@StringRes val title: Int) {
     Start(title = R.string.main_title),
@@ -98,16 +103,20 @@ fun ArtdealerApp(
         ) {
             composable (route = ArtScreen.Start.name) {
                 MainScreen(
+                    picturesChosen = uiState.picturesChosen,
                     onArtistButtonClicked = { navController.navigate(ArtScreen.Artist.name) },
                     onCategoryButtonClicked = { navController.navigate(ArtScreen.Category.name) },
+                    onDeleteButtonClicked = { selectedPhoto: SelectedPhoto ->
+                        viewModel.deletePhoto(selectedPhoto)
+                    },
                     onPayButtonClicked = { navController.navigate(ArtScreen.Payment.name) },
                 )
             }
 
             composable (route = ArtScreen.Artist.name) {
                 ArtistScreen(
-                    viewModel = viewModel,
-                    onClick = {
+                    onClick = {artistId: Long ->
+                        viewModel.setArtist(artistId)
                         navController.navigate(ArtScreen.PictureByArtist.name)
                     }
                 )
@@ -115,8 +124,8 @@ fun ArtdealerApp(
 
             composable (route = ArtScreen.Category.name) {
                 CategoryScreen(
-                    viewModel = viewModel,
-                    onClick = {
+                    onClick = {category: Category ->
+                        viewModel.setCategory(category)
                         navController.navigate(ArtScreen.PictureByCategory.name)
                     }
                 )
@@ -142,23 +151,53 @@ fun ArtdealerApp(
                     }
                 )
             }
+
             composable (route=ArtScreen.Details.name) {
                 Details(
                     photo = uiState.chosenPhoto,
-                    viewModel = viewModel
-
+                    chosenFrameType = uiState.chosenFrameMaterial,
+                    chosenFrameSize = uiState.chosenFrameSize,
+                    chosenPhotoSize = uiState.chosenPhotoSize,/* TODO*/ // Nødvendig?
+                    onChoosePhotoSize = { photoSize: PhotoSize ->
+                        viewModel.setPhotoSizeOption(photoSize)
+                    },
+                    onChooseFrameType = { frameType: FrameType ->
+                        viewModel.setFrameMaterialOption(frameType)
+                    },
+                    onChooseFrameSize = { frameSize: Int ->
+                        viewModel.setFrameSizeOption(frameSize)
+                    },
+                    onAddPhoto = {
+                        viewModel.addPhoto(
+                            SelectedPhoto(
+                                photoId = uiState.chosenPhoto.id,
+                                frameType = uiState.chosenFrameMaterial,
+                                frameWidth = uiState.chosenFrameSize,
+                                photoSize = uiState.chosenPhotoSize,
+                                photoPrice = uiState.chosenPhoto.price
+                            )
+                        )
+                    },
+                    onDoneClick = {
+                        if (navController.currentDestination?.route != ArtScreen.Start.name) {
+                            navController.navigate(ArtScreen.Start.name)
+                        }
+                    }
+                )
+            }
 
             composable(route = ArtScreen.Payment.name) {
                 PaymentScreen(
+                    price = uiState.picturesChosen.sumOf { it.photoPrice.toDouble() * DataSource.PHOTO_PRICE }.roundToInt(),
+                    onPayButtonClicked = {
+                        viewModel.reset()
+                    },
                     onClick = {
                         navController.navigate(ArtScreen.Start.name)
                     }
                 )
             }
 
-
-                )
-            }
         }
     }
 }
