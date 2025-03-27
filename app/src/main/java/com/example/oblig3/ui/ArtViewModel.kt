@@ -75,4 +75,8 @@ class ArtViewModel: ViewModel() {
         }
     }
 
+    fun reset() {
+        _uiState.value = ArtUiState()
+    }
+
 }

@@ -28,10 +28,12 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.oblig3.R
 import com.example.oblig3.data.Category
+import com.example.oblig3.data.DataSource
 import com.example.oblig3.data.FrameType
 import com.example.oblig3.data.Photo
 import com.example.oblig3.data.PhotoSize
 import com.example.oblig3.data.SelectedPhoto
+import kotlin.math.roundToInt
 
 enum class ArtScreen (@StringRes val title: Int) {
     Start(title = R.string.main_title),
@@ -183,6 +185,10 @@ fun ArtdealerApp(
 
             composable(route = ArtScreen.Payment.name) {
                 PaymentScreen(
+                    price = uiState.picturesChosen.sumOf { it.photoPrice.toDouble() * DataSource.PHOTO_PRICE }.roundToInt(),
+                    onPayButtonClicked = {
+                        viewModel.reset()
+                    },
                     onClick = {
                         navController.navigate(ArtScreen.Start.name)
                     }

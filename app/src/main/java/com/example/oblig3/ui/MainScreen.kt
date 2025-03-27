@@ -107,7 +107,10 @@ fun MainScreen(
                                 horizontalArrangement = Arrangement.SpaceEvenly,
                                 modifier = Modifier.fillMaxWidth()
                             ) {
-                                Column {
+                                Column(
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .padding(4.dp)) {
                                     val photo = DataSource.PhotosForSale.find { it.id == item.photoId }
                                     val artist = DataSource.Artists.find { it.id == item.photoId }
                                     if (photo != null) {
@@ -122,7 +125,9 @@ fun MainScreen(
                                 }
 
                                 }
-                                Column {
+                                Column(
+                                    modifier = Modifier
+                                        .weight(1f)) {
                                     Text(
                                         text = item.frameType.name
                                     )
@@ -130,7 +135,9 @@ fun MainScreen(
                                         text = item.photoSize.name
                                     )
                                 }
-                                Column {
+                                Column(
+                                    modifier = Modifier
+                                        .weight(1f)) {
                                     Text(
                                         text = item.frameWidth.toString()
                                     )
