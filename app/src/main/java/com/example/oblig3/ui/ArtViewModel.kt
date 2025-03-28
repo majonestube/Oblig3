@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlin.math.roundToInt
 
 private const val EXTRA_PRICE = 200
 
@@ -27,6 +28,7 @@ class ArtViewModel: ViewModel() {
                 picturesChosen = currentState.picturesChosen + photo
             )
         }
+        setTotalPrice()
     }
 
     fun deletePhoto(
@@ -37,6 +39,7 @@ class ArtViewModel: ViewModel() {
                 picturesChosen = currentScreen.picturesChosen - photo
             )
         }
+        setTotalPrice()
     }
 
     // Set the selected artist
@@ -102,6 +105,14 @@ class ArtViewModel: ViewModel() {
         }
 
         return framePrice + materialPrice + photoPrice * DataSource.PHOTO_PRICE + photoSizePrice
+    }
+
+    fun setTotalPrice() {
+        _uiState.update { currentState ->
+            currentState.copy(
+                totalPrice = uiState.value.picturesChosen.sumOf { it.photoPrice.toDouble() }.roundToInt()
+            )
+        }
     }
 
     fun resetDetails() {

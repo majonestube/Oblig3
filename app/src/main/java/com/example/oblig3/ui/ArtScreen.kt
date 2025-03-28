@@ -110,6 +110,7 @@ fun ArtdealerApp(
                         viewModel.deletePhoto(selectedPhoto)
                     },
                     onPayButtonClicked = { navController.navigate(ArtScreen.Payment.name) },
+                    totalPrice = uiState.totalPrice
                 )
             }
 
@@ -191,7 +192,7 @@ fun ArtdealerApp(
 
             composable(route = ArtScreen.Payment.name) {
                 PaymentScreen(
-                    price = uiState.picturesChosen.sumOf { it.photoPrice.toDouble() }.roundToInt(),
+                    price = uiState.totalPrice,
                     onPayButtonClicked = {
                         viewModel.reset()
                     },

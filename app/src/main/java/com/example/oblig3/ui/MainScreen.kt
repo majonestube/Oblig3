@@ -28,6 +28,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.oblig3.R
 import com.example.oblig3.data.DataSource
 import com.example.oblig3.data.SelectedPhoto
@@ -40,7 +41,8 @@ fun MainScreen(
     onCategoryButtonClicked: () -> Unit,
     onDeleteButtonClicked: (SelectedPhoto) -> Unit,
     onPayButtonClicked: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    totalPrice: Int
 ) {
 
     Column(
@@ -89,7 +91,7 @@ fun MainScreen(
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = stringResource(R.string.totalpris_med_pris, picturesChosen.sumOf { it.photoPrice.toDouble() }.roundToInt()),
+                text = stringResource(R.string.totalpris_med_pris, totalPrice),
                 fontWeight = FontWeight.Bold
             )
             if (picturesChosen.isNotEmpty()) {
