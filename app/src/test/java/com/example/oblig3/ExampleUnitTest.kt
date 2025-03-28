@@ -89,6 +89,7 @@ class ExampleUnitTest {
     fun total_price_test() {
         val viewModel = ArtViewModel()
         val uiState = viewModel.uiState
+        val totalPriceAtCreation = uiState.value.totalPrice
 
         viewModel.setPhoto(DataSource.PhotosForSale[0])
         viewModel.setFrameMaterialOption(FrameType.entries[0])
@@ -137,9 +138,19 @@ class ExampleUnitTest {
             photoSize = uiState.value.chosenPhotoSize,
             photoPrice = viewModel.calculatePrice()
         ))
-        viewModel.setTotalPrice()
-        val price = viewModel.uiState.value.totalPrice
+        val totalPrice = viewModel.uiState.value.totalPrice
 
-        assertEquals(3410,price)
+        viewModel.deletePhoto(uiState.value.picturesChosen[0])
+        val totalPriceAfterDelete = viewModel.uiState.value.totalPrice
+
+        while (uiState.value.picturesChosen.isNotEmpty()) {
+            viewModel.deletePhoto(uiState.value.picturesChosen[0])
+        }
+        val totalPriceEmptyList = viewModel.uiState.value.totalPrice
+
+        assertEquals(0,totalPriceAtCreation)
+        assertEquals(3410,totalPrice)
+        assertEquals(2910,totalPriceAfterDelete)
+        assertEquals(0,totalPriceEmptyList)
     }
 }
