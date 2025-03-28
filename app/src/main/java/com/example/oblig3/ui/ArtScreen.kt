@@ -98,7 +98,7 @@ fun ArtdealerApp(
 
         NavHost(
             navController = navController,
-            startDestination = ArtScreen.Details.name,
+            startDestination = ArtScreen.Start.name,
             modifier = Modifier.padding(innerPadding)
         ) {
             composable (route = ArtScreen.Start.name) {
