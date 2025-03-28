@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material3.Button
@@ -29,11 +30,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role.Companion.Image
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -91,84 +94,122 @@ fun Details(
         }
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = stringResource(R.string.velg_ramme_og_st_rrelse)
+            text = stringResource(R.string.velg_ramme_og_st_rrelse),
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(8.dp)
         )
         Column() {
+
             Row( verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(8.dp)) {
-                RadioButton(
-                    selected = chosenFrameType == FrameType.WOOD,
-                    onClick = { onChooseFrameType(FrameType.WOOD)}
-                )
-                Text(
-                    text = stringResource(R.string.rammetype_tre)
-                )
-                RadioButton(
-                    selected = chosenPhotoSize == PhotoSize.SMALL,
-                    onClick = {onChoosePhotoSize(PhotoSize.SMALL)})
-                Text(
-                    text = stringResource(R.string.bildestørrelse_liten)
-                )
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)) {
+                Row(verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.weight(1f)) {
+                    RadioButton(
+                        selected = chosenFrameType == FrameType.WOOD,
+                        onClick = { onChooseFrameType(FrameType.WOOD)}
+                    )
+                    Text(
+                        text = stringResource(R.string.rammetype_tre),
+                        modifier = Modifier.padding(end = 8.dp)
+                    )
+                }
+                Row(verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.weight(1f)) {
+                    RadioButton(
+                        selected = chosenPhotoSize == PhotoSize.SMALL,
+                        onClick = {onChoosePhotoSize(PhotoSize.SMALL)})
+                    Text(
+                        text = stringResource(R.string.bildestørrelse_liten)
+                    )
+                }
+
             }
             Row( verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .padding(8.dp)
                     .fillMaxWidth()
             ) {
-                RadioButton(selected = chosenFrameType == FrameType.METAL,
-                    onClick = {onChooseFrameType(FrameType.METAL)})
-                Text(
-                    text = stringResource(R.string.rammetype_metal)
-                )
-                RadioButton(selected = chosenPhotoSize == PhotoSize.MEDIUM,
-                    onClick = {onChoosePhotoSize(PhotoSize.MEDIUM)})
-                Text(
-                    text = stringResource(R.string.bildestørrelse_medium)
-                )
+                Row(verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.weight(1f)) {
+                    RadioButton(selected = chosenFrameType == FrameType.METAL,
+                        onClick = {onChooseFrameType(FrameType.METAL)})
+                    Text(
+                        text = stringResource(R.string.rammetype_metal)
+                    )
+                }
+
+                Row(verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.weight(1f)) {
+                    RadioButton(selected = chosenPhotoSize == PhotoSize.MEDIUM,
+                        onClick = {onChoosePhotoSize(PhotoSize.MEDIUM)})
+                    Text(
+                        text = stringResource(R.string.bildestørrelse_medium)
+                    )
+                }
             }
             Row( verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(8.dp)
             ) {
-                RadioButton(selected = chosenFrameType == FrameType.PLASTIC,
-                    onClick = {onChooseFrameType(FrameType.PLASTIC)})
-                Text(
-                    text = stringResource(R.string.rammetype_plastikk)
-                )
-                RadioButton(selected = chosenPhotoSize == PhotoSize.LARGE,
-                    onClick = {onChoosePhotoSize(PhotoSize.LARGE)})
-                Text(
-                    text = stringResource(R.string.bildestørrelse_stor)
-                )
+                Row(verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.weight(1f)) {
+                    RadioButton(selected = chosenFrameType == FrameType.PLASTIC,
+                        onClick = {onChooseFrameType(FrameType.PLASTIC)})
+                    Text(
+                        text = stringResource(R.string.rammetype_plastikk)
+                    )
+                }
+
+                Row(verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.weight(1f)) {
+                    RadioButton(selected = chosenPhotoSize == PhotoSize.LARGE,
+                        onClick = {onChoosePhotoSize(PhotoSize.LARGE)})
+                    Text(
+                        text = stringResource(R.string.bildestørrelse_stor)
+                    )
+                }
             }
         }
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = stringResource(R.string.velg_rammebredde)
+            text = stringResource(R.string.velg_rammebredde),
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(8.dp)
         )
-        
+
         Row( verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .padding(8.dp)
                 .fillMaxWidth()
         ) {
-            RadioButton(
-                selected = chosenFrameSize == FrameSize.SMALL.size,
-                onClick = {onChooseFrameSize(FrameSize.SMALL.size)})
-            Text(
-                text = FrameSize.SMALL.size.toString()
-            )
-            RadioButton(
-                selected = chosenFrameSize == FrameSize.MEDIUM.size,
-                onClick = {onChooseFrameSize(FrameSize.MEDIUM.size)})
-            Text(
-                text = FrameSize.MEDIUM.size.toString()
-            )
-            RadioButton(
-                selected = chosenFrameSize == FrameSize.LARGE.size,
-                onClick = {onChooseFrameSize(FrameSize.LARGE.size)})
-            Text(
-                text = FrameSize.LARGE.size.toString()
-            )
+            Row(verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.weight(1f)) {
+                RadioButton(
+                    selected = chosenFrameSize == FrameSize.SMALL.size,
+                    onClick = {onChooseFrameSize(FrameSize.SMALL.size)})
+                Text(
+                    text = FrameSize.SMALL.size.toString()
+                )
+            }
+            Row(verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.weight(1f)) {
+                RadioButton(
+                    selected = chosenFrameSize == FrameSize.MEDIUM.size,
+                    onClick = {onChooseFrameSize(FrameSize.MEDIUM.size)})
+                Text(
+                    text = FrameSize.MEDIUM.size.toString()
+                )
+            }
+            Row(verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.weight(1f)) {
+                RadioButton(
+                    selected = chosenFrameSize == FrameSize.LARGE.size,
+                    onClick = {onChooseFrameSize(FrameSize.LARGE.size)})
+                Text(
+                    text = FrameSize.LARGE.size.toString()
+                )
+            }
         }
         Spacer(modifier = Modifier.height(16.dp))
         Row(
@@ -177,16 +218,14 @@ fun Details(
                 .padding(16.dp)
         ) {
             Text(
-                text = "Pris: ",
+                text = stringResource(R.string.detaljer_pris,calculatePrice.toString()),
                 fontWeight = FontWeight.Bold
             )
-            Text(
-                text = calculatePrice.toString()
-            )
+
         }
         Row() {
             Button(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(1f).padding(start = 8.dp, end = 4.dp),
                 onClick = {
                     onAddPhoto()
                     Toast.makeText(context,
@@ -194,10 +233,11 @@ fun Details(
                     onDoneClick()
                 }
             ) {
-                Text(stringResource(R.string.legg_i_handlekurv))
+                Text(
+                    stringResource(R.string.legg_i_handlekurv))
             }
             Button(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(1f).padding(start = 4.dp,end = 8.dp),
                 onClick = onDoneClick
             ) {
                 Text(stringResource(R.string.hjem))

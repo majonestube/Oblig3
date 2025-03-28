@@ -30,4 +30,5 @@
     <string name="velg_rammebredde">Velg rammebredde</string>
     <string name="velg_ramme_og_st_rrelse">Velg ramme og størrelse</string>
     <string name="lagt_i_handlekurv">Lagt i handlekurv!</string>
+    <string name="detaljer_pris">Pris: %s</string>
 </resources>

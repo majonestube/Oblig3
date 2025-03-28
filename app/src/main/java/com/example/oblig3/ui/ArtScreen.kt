@@ -157,7 +157,7 @@ fun ArtdealerApp(
                     photo = uiState.chosenPhoto,
                     chosenFrameType = uiState.chosenFrameMaterial,
                     chosenFrameSize = uiState.chosenFrameSize,
-                    chosenPhotoSize = uiState.chosenPhotoSize,/* TODO*/ // Nødvendig?
+                    chosenPhotoSize = uiState.chosenPhotoSize,
                     onChoosePhotoSize = { photoSize: PhotoSize ->
                         viewModel.setPhotoSizeOption(photoSize)
                     },
@@ -174,14 +174,16 @@ fun ArtdealerApp(
                                 frameType = uiState.chosenFrameMaterial,
                                 frameWidth = uiState.chosenFrameSize,
                                 photoSize = uiState.chosenPhotoSize,
-                                photoPrice = uiState.chosenPhoto.price
+                                photoPrice = viewModel.calculatePrice()
                             )
                         )
+                        viewModel.resetDetails()
                     },
                     onDoneClick = {
                         if (navController.currentDestination?.route != ArtScreen.Start.name) {
                             navController.navigate(ArtScreen.Start.name)
                         }
+                        viewModel.resetDetails()
                     },
                     viewModel.calculatePrice()
                 )
@@ -189,7 +191,7 @@ fun ArtdealerApp(
 
             composable(route = ArtScreen.Payment.name) {
                 PaymentScreen(
-                    price = uiState.picturesChosen.sumOf { it.photoPrice.toDouble() * DataSource.PHOTO_PRICE }.roundToInt(),
+                    price = uiState.picturesChosen.sumOf { it.photoPrice.toDouble() }.roundToInt(),
                     onPayButtonClicked = {
                         viewModel.reset()
                     },

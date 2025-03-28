@@ -85,11 +85,11 @@ fun MainScreen(
 
             }
             Text(
-                text = stringResource(R.string.antall_bilder_valgt, picturesChosen.size), /*TODO*/
+                text = stringResource(R.string.antall_bilder_valgt, picturesChosen.size),
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = stringResource(R.string.totalpris_med_pris, picturesChosen.sumOf { it.photoPrice.toDouble() * DataSource.PHOTO_PRICE }.roundToInt()), /*TODO*/
+                text = stringResource(R.string.totalpris_med_pris, picturesChosen.sumOf { it.photoPrice.toDouble() }.roundToInt()),
                 fontWeight = FontWeight.Bold
             )
             if (picturesChosen.isNotEmpty()) {
@@ -143,7 +143,7 @@ fun MainScreen(
                                         text = item.frameWidth.toString()
                                     )
                                     Text(
-                                        text = (item.photoPrice * DataSource.PHOTO_PRICE).toString()
+                                        text = (item.photoPrice).toString()
                                     )
                                 }
                                 Button(

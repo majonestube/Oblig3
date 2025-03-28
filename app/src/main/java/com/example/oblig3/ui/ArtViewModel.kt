@@ -3,6 +3,7 @@ package com.example.oblig3.ui
 import androidx.lifecycle.ViewModel
 import com.example.oblig3.data.ArtUiState
 import com.example.oblig3.data.Category
+import com.example.oblig3.data.DataSource
 import com.example.oblig3.data.FrameSize
 import com.example.oblig3.data.FrameType
 import com.example.oblig3.data.Photo
@@ -100,7 +101,17 @@ class ArtViewModel: ViewModel() {
             }
         }
 
-        return framePrice + materialPrice + photoPrice + photoSizePrice
+        return framePrice + materialPrice + photoPrice * DataSource.PHOTO_PRICE + photoSizePrice
+    }
+
+    fun resetDetails() {
+        val frameType = FrameType.entries[0]
+        val frameSize = FrameSize.entries[0].size
+        val photoSize = PhotoSize.entries[0]
+
+        setFrameMaterialOption(frameType)
+        setFrameSizeOption(frameSize)
+        setPhotoSizeOption(photoSize)
     }
 
     fun reset() {
