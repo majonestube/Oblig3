@@ -78,18 +78,22 @@ fun Details(
                 Text(
                     text = photo.title
                 )
-
-                Image(
-                    painter = painterResource(photo.imageResId),
-                    contentDescription = photo.title,
-                    modifier = Modifier
-                        .fillMaxWidth(0.4f)
-                        .border(
-                            width = chosenFrameSize.dp,
-                            brush = SolidColor(chosenFrameType.color),
-                            shape = CutCornerShape(12.dp),
-                        ),
+                Box(modifier = Modifier.wrapContentSize()
+                    .border(
+                    width = chosenFrameSize.dp,
+                    brush = SolidColor(chosenFrameType.color),
+                    shape = CutCornerShape(12.dp),
                 )
+                    .padding(chosenFrameSize.dp)) {
+                    Image(
+                        painter = painterResource(photo.imageResId),
+                        contentDescription = photo.title,
+                        modifier = Modifier
+                            .fillMaxWidth(0.4f)
+                    )
+
+                }
+
             }
         }
         Spacer(modifier = Modifier.height(16.dp))
@@ -248,7 +252,7 @@ fun Details(
 
 
 @Composable
-@Preview
+@Preview //In ArtScreen.kt -> ArtDealerApp -> NavHost, edit startDestination from "Start" to "Details"
 fun DetailsPreview(
     photo: Photo = DataSource.PhotosForSale[0]
 ){
