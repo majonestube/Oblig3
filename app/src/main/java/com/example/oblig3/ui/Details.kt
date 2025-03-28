@@ -37,6 +37,7 @@ import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.oblig3.R
 import com.example.oblig3.data.DataSource
@@ -59,6 +60,7 @@ fun Details(
     onChooseFrameSize: (Int) -> Unit,
     onAddPhoto: () -> Unit,
     onDoneClick: () -> Unit,
+    calculatePrice: Float
 ) {
     val context = LocalContext.current
 
@@ -73,6 +75,7 @@ fun Details(
                 Text(
                     text = photo.title
                 )
+
                 Image(
                     painter = painterResource(photo.imageResId),
                     contentDescription = photo.title,
@@ -178,7 +181,7 @@ fun Details(
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = "XXX" /*TODO*/
+                text = calculatePrice.toString()
             )
         }
         Row() {
@@ -195,7 +198,7 @@ fun Details(
             }
             Button(
                 modifier = Modifier.weight(1f),
-                onClick = { /*TODO*/ }
+                onClick = onDoneClick
             ) {
                 Text(stringResource(R.string.hjem))
             }

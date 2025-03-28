@@ -182,7 +182,8 @@ fun ArtdealerApp(
                         if (navController.currentDestination?.route != ArtScreen.Start.name) {
                             navController.navigate(ArtScreen.Start.name)
                         }
-                    }
+                    },
+                    viewModel.calculatePrice()
                 )
             }
 

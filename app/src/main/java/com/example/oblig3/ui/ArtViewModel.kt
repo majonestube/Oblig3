@@ -3,6 +3,7 @@ package com.example.oblig3.ui
 import androidx.lifecycle.ViewModel
 import com.example.oblig3.data.ArtUiState
 import com.example.oblig3.data.Category
+import com.example.oblig3.data.FrameSize
 import com.example.oblig3.data.FrameType
 import com.example.oblig3.data.Photo
 import com.example.oblig3.data.PhotoSize
@@ -85,6 +86,21 @@ class ArtViewModel: ViewModel() {
                 chosenPhotoSize = option
             )
         }
+    }
+
+    fun calculatePrice(): Float {
+        var framePrice = 0f
+        val photoPrice = uiState.value.chosenPhoto.price
+        val photoSizePrice = uiState.value.chosenPhotoSize.extraPrice
+        val materialPrice = uiState.value.chosenFrameMaterial.extraPrice
+
+        for (frame in FrameSize.entries) {
+            if (frame.size == uiState.value.chosenFrameSize) {
+                framePrice = frame.extraPrice
+            }
+        }
+
+        return framePrice + materialPrice + photoPrice + photoSizePrice
     }
 
     fun reset() {
