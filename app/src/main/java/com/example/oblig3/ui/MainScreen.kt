@@ -115,7 +115,9 @@ fun MainScreen(
                                         .weight(1f)
                                         .padding(4.dp)) {
                                     val photo = DataSource.PhotosForSale.find { it.id == item.photoId }
-                                    val artist = DataSource.Artists.find { it.id == item.photoId }
+                                    val artist = DataSource.Artists.find {
+                                        it.id == (photo?.artistId ?: "")
+                                    }
                                     if (photo != null) {
                                         Text(
                                             text = photo.title

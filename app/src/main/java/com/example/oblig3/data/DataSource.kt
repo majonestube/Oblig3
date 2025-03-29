@@ -126,7 +126,7 @@ object DataSource {
         ),
         Photo(
             id = 12,
-            title = "Climbing silhouette",
+            title = "Kayak",
             imageResId = R.drawable.sport_5,
             artistId = 1,
             category = Category.SPORT,
