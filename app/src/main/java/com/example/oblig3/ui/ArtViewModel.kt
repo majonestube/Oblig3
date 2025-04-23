@@ -1,6 +1,13 @@
 package com.example.oblig3.ui
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.oblig3.ArtPhotosApplication
+import com.example.oblig3.data.ArtPhotosRepository
 import com.example.oblig3.data.ArtUiState
 import com.example.oblig3.data.Category
 import com.example.oblig3.data.DataSource
@@ -13,13 +20,26 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 private const val EXTRA_PRICE = 200
 
-class ArtViewModel: ViewModel() {
+class ArtViewModel(
+    private val artPhotosRepository: ArtPhotosRepository
+): ViewModel() {
     private val _uiState = MutableStateFlow(ArtUiState())
     val uiState: StateFlow<ArtUiState> = _uiState.asStateFlow()
+
+    fun getAllPhotos() {
+        viewModelScope.launch {
+            _uiState.update { currentState ->
+                currentState.copy(
+                    allPhotos = artPhotosRepository.getArtPhotos()
+                )
+            }
+        }
+    }
 
     fun addPhoto(
         photo: SelectedPhoto) {
@@ -127,6 +147,21 @@ class ArtViewModel: ViewModel() {
 
     fun reset() {
         _uiState.value = ArtUiState()
+    }
+
+    companion object {
+        val Factory: ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                val application = (this[APPLICATION_KEY] as? ArtPhotosApplication)
+                    ?: throw IllegalStateException("Application is not ArtPhotosApplication")
+                val artPhotosRepository = try {
+                    application.container.artPhotosRepository
+                } catch (e: Exception) {
+                    throw IllegalStateException("Failed to get reporitory: ${e.message}")
+                }
+                ArtViewModel(artPhotosRepository = artPhotosRepository)
+            }
+        }
     }
 
 }

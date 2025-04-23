@@ -42,7 +42,8 @@ enum class ArtScreen (@StringRes val title: Int) {
     PictureByArtist(title = R.string.bilder),
     PictureByCategory(title = R.string.bilder),
     Details(title = R.string.detaljer),
-    Payment(title = R.string.betaling)
+    Payment(title = R.string.betaling),
+    Test(title = (R.string.test))
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -76,7 +77,7 @@ fun ArtdealerAppBar(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArtdealerApp(
-    viewModel: ArtViewModel = viewModel(),
+    viewModel: ArtViewModel = viewModel(factory = ArtViewModel.Factory),
     navController: NavHostController = rememberNavController(),
     modifier: Modifier = Modifier) {
     val backStackEntry by navController.currentBackStackEntryAsState()
@@ -110,6 +111,7 @@ fun ArtdealerApp(
                         viewModel.deletePhoto(selectedPhoto)
                     },
                     onPayButtonClicked = { navController.navigate(ArtScreen.Payment.name) },
+                    onAllPhotosButtonClicked = { navController.navigate(ArtScreen.Test.name)},
                     totalPrice = uiState.totalPrice
                 )
             }
@@ -199,6 +201,13 @@ fun ArtdealerApp(
                     onClick = {
                         navController.navigate(ArtScreen.Start.name)
                     }
+                )
+            }
+
+            composable(route = ArtScreen.Test.name) {
+                viewModel.getAllPhotos()
+                AllPicturesScreen(
+                    uiState.allPhotos
                 )
             }
 

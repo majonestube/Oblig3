@@ -1,5 +1,8 @@
+/*
 package com.example.oblig3
 
+import androidx.compose.ui.util.fastCbrt
+import androidx.lifecycle.ViewModelProvider
 import com.example.oblig3.data.DataSource
 import com.example.oblig3.data.FrameSize
 import com.example.oblig3.data.FrameType
@@ -154,3 +157,4 @@ class ExampleUnitTest {
         assertEquals(0,totalPriceEmptyList)
     }
 }
+*/

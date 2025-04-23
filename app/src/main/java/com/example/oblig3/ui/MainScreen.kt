@@ -41,6 +41,7 @@ fun MainScreen(
     onCategoryButtonClicked: () -> Unit,
     onDeleteButtonClicked: (SelectedPhoto) -> Unit,
     onPayButtonClicked: () -> Unit,
+    onAllPhotosButtonClicked: () -> Unit,
     modifier: Modifier = Modifier,
     totalPrice: Int
 ) {
@@ -177,6 +178,15 @@ fun MainScreen(
             ) {
                 Text(
                     text = stringResource(R.string.til_betaling)
+                )
+            }
+
+            Button(
+                onClick = { onAllPhotosButtonClicked() },
+                modifier = Modifier.fillMaxWidth(0.9f)
+            ) {
+                Text(
+                    text = stringResource(R.string.test)
                 )
             }
         }

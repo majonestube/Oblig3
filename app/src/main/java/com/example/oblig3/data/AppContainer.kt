@@ -7,7 +7,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
 
 interface AppContainer {
-    val artPhotoRepository: ArtPhotosRepository
+    val artPhotosRepository: ArtPhotosRepository
 }
 
 class DefaultAppContainer: AppContainer {
@@ -22,7 +22,7 @@ class DefaultAppContainer: AppContainer {
         retrofit.create(ArtApiService::class.java)
     }
 
-    override val artPhotoRepository: ArtPhotosRepository by lazy {
+    override val artPhotosRepository: ArtPhotosRepository by lazy {
         NetworkArtPhotosRepository(retrofitService)
     }
 }

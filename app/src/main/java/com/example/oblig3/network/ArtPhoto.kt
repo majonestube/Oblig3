@@ -13,5 +13,5 @@ data class ArtPhoto (
     val imgSrc: String,
     val artistId: String,
     val categoryId: String,
-    val price: String
+    val price: Double
 )
