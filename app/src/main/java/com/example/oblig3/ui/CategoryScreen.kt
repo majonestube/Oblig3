@@ -20,20 +20,21 @@ import androidx.compose.ui.unit.dp
 import com.example.oblig3.R
 import com.example.oblig3.data.Category
 import com.example.oblig3.data.DataSource
+import com.example.oblig3.network.ArtCategory
 
 @Composable
 fun CategoryScreen (
+    categories: List<ArtCategory>,
     onClick: (Category) -> Unit
 ) {
-    val category: List<Category> = DataSource.Categories
 
-    if (category.isNotEmpty()) {
+    if (categories.isNotEmpty()) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(1),
             modifier = Modifier
                 .heightIn(min = 0.dp, max = LocalConfiguration.current.screenHeightDp.dp * 0.55f)
         ) {
-            items(category) { item ->
+            items(categories) { item ->
                 Card (
                     modifier = Modifier
                         .fillMaxWidth()

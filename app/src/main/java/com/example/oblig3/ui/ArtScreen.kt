@@ -126,7 +126,9 @@ fun ArtdealerApp(
             }
 
             composable (route = ArtScreen.Category.name) {
+                viewModel.getCategories()
                 CategoryScreen(
+                    uiState.categories,
                     onClick = {category: Category ->
                         viewModel.setCategory(category)
                         navController.navigate(ArtScreen.PictureByCategory.name)

@@ -1,9 +1,12 @@
 package com.example.oblig3.data
 
+import com.example.oblig3.network.ArtCategory
 import com.example.oblig3.network.ArtPhoto
 
 data class ArtUiState(
     val allPhotos: List<ArtPhoto> = listOf(),
+    val categories: List<ArtCategory> = listOf(),
+
     val picturesChosen: List<SelectedPhoto> = listOf(),
     val chosenArtist: Long = 0,
     val chosenCategory: Category = Category.NATURE,

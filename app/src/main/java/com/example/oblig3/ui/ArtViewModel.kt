@@ -41,6 +41,16 @@ class ArtViewModel(
         }
     }
 
+    fun getCategories() {
+        viewModelScope.launch {
+            _uiState.update { currentState ->
+                currentState.copy(
+                    categories = artPhotosRepository.getCategories()
+                )
+            }
+        }
+    }
+
     fun addPhoto(
         photo: SelectedPhoto) {
         _uiState.update { currentState ->
