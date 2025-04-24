@@ -50,7 +50,7 @@ data class SelectedPhoto (
     val artistId: String,
     val frameType: String,
     val frameWidth: Int,
-    val photoSize: Double,
+    val photoSize: String,
     val photoPrice: Double = 0.0,
 )
 

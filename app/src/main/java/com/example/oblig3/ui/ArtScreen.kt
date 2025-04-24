@@ -113,7 +113,8 @@ fun ArtdealerApp(
                     },
                     onArtistButtonClicked = { navController.navigate(ArtScreen.Artist.name) },
                     onCategoryButtonClicked = { navController.navigate(ArtScreen.Category.name) },
-                    onDeleteButtonClicked = {/*TODO*/
+                    onDeleteButtonClicked = { photo ->
+                        viewModel.deletePhoto(photo)
                     },
                     onPayButtonClicked = { navController.navigate(ArtScreen.Payment.name) },
                     totalPrice = uiState.totalPrice
@@ -179,19 +180,18 @@ fun ArtdealerApp(
                     onChooseFrameSize = { frameSize: Int ->
                         viewModel.setFrameSizeOption(frameSize)
                     },
-                    onAddPhoto = {/*TODO
+                    onAddPhoto = {
                         viewModel.addPhoto(
                             SelectedPhoto(
                                 photoId = uiState.chosenPhoto.id,
                                 artistId = uiState.chosenPhoto.artistId,
-                                frameType = uiState.chosenFrameMaterial,
+                                frameType = uiState.chosenFrameMaterial.toString(),
                                 frameWidth = uiState.chosenFrameSize,
-                                photoSize = uiState.chosenPhotoSize,
+                                photoSize = uiState.chosenPhotoSize.toString(),
                                 photoPrice = viewModel.calculatePrice()
                             )
                         )
                         viewModel.resetDetails()
-                        */
                     },
                     onDoneClick = {
                         if (navController.currentDestination?.route != ArtScreen.Start.name) {
