@@ -161,6 +161,7 @@ fun MainScreen(
                             Button(
                                 onClick = {
                                     onDeleteButtonClicked(SelectedPhoto(
+                                        id = item.id,
                                         photoId = item.photoId,
                                         artistId = item.artistId,
                                         frameType = item.frameType,
