@@ -182,7 +182,7 @@ fun ArtdealerApp(
                         viewModel.addPhoto(
                             SelectedPhoto(
                                 photoId = uiState.chosenPhoto.id,
-                                artistId = uiState.chosenArtist,
+                                artistId = uiState.chosenPhoto.artistId,
                                 frameType = uiState.chosenFrameMaterial,
                                 frameWidth = uiState.chosenFrameSize,
                                 photoSize = uiState.chosenPhotoSize,
@@ -217,9 +217,13 @@ fun ArtdealerApp(
                 //viewModel.getAllPhotos()
                 //viewModel.getPhotosByCategory("2")
                 viewModel.getPhotosByArtist("2")
+                viewModel.getPhotoById("1")
+                val list = listOf(uiState.photoById)
                 AllPicturesScreen(
                     //uiState.allPhotos
-                    uiState.listOfPhotos
+                    //uiState.listOfPhotos,
+                    list
+
                 )
             }
 

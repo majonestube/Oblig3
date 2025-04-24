@@ -16,8 +16,8 @@ interface ArtPhotosRepository {
 
     suspend fun getPhotosByCategory(categoryId: String): List<ArtPhoto>
     suspend fun getPhotosByArtist(artistId: String): List<ArtPhoto>
-    suspend fun getPhotoById(photoId: String): ArtPhoto
-    suspend fun getArtistById(artistId: String): Artist
+    suspend fun getPhotoById(photoId: String): List<ArtPhoto>
+    suspend fun getArtistById(artistId: String): List<Artist>
 }
 
 class NetworkArtPhotosRepository(
@@ -44,9 +44,9 @@ class NetworkArtPhotosRepository(
     override suspend fun getPhotosByArtist(artistId: String): List<ArtPhoto> =
         artApiService.getPhotosByArtist(artistId)
 
-    override suspend fun getPhotoById(photoId: String): ArtPhoto =
+    override suspend fun getPhotoById(photoId: String): List<ArtPhoto> =
         artApiService.getPhotoById(photoId)
 
-    override suspend fun getArtistById(artistId: String): Artist =
+    override suspend fun getArtistById(artistId: String): List<Artist> =
         artApiService.getArtistById(artistId)
 }

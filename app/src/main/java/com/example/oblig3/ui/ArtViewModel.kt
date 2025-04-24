@@ -36,7 +36,7 @@ class ArtViewModel(
         viewModelScope.launch {
             _uiState.update { currentState ->
                 currentState.copy(
-                    photoById = artPhotosRepository.getPhotoById(photoId = photoId)
+                    photoById = artPhotosRepository.getPhotoById(photoId = photoId)[0]
                 )
             }
         }
@@ -46,7 +46,7 @@ class ArtViewModel(
         viewModelScope.launch {
             _uiState.update { currentState ->
                 currentState.copy(
-                    artistById = artPhotosRepository.getArtistById(artistId = artistId)
+                    artistById = artPhotosRepository.getArtistById(artistId = artistId)[0]
                 )
             }
         }

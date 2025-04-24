@@ -25,12 +25,12 @@ interface ArtApiService {
     @GET("artists")
     suspend fun getArtistById(
         @Query("id") photoId: String
-    ): Artist
+    ): List<Artist>
 
     @GET("photos")
     suspend fun getPhotoById(
         @Query("id") photoId: String
-    ): ArtPhoto
+    ): List<ArtPhoto>
 
     @GET("photos")
     suspend fun getPhotosByCategory(
