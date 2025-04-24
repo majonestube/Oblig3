@@ -19,8 +19,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
@@ -28,14 +26,18 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.oblig3.R
+import com.example.oblig3.data.Artist
 import com.example.oblig3.data.DataSource
 import com.example.oblig3.data.SelectedPhoto
-import kotlin.math.roundToInt
+import com.example.oblig3.network.ArtPhoto
 
 @Composable
 fun MainScreen(
+    photo: ArtPhoto,
+    artist: Artist,
+    getPhotoById: (String) -> Unit,
+    getArtistById: (String) -> Unit,
     picturesChosen: List<SelectedPhoto>,
     onArtistButtonClicked: () -> Unit,
     onCategoryButtonClicked: () -> Unit,
@@ -115,17 +117,20 @@ fun MainScreen(
                                     modifier = Modifier
                                         .weight(1f)
                                         .padding(4.dp)) {
-                                    val photo = DataSource.PhotosForSale.find { it.id == item.photoId }
-                                    val artist = DataSource.Artists.find {
+                                    //val photo = DataSource.PhotosForSale.find { it.id == item.photoId }
+                                    /*val artist = DataSource.Artists.find {
                                         it.id == (photo?.artistId ?: "")
-                                    }
+                                    }*/
+                                    getPhotoById(item.photoId)
+                                    getArtistById(item.artistId)
+
                                     if (photo != null) {
                                         Text(
                                             text = photo.title
                                         )
                                     if (artist != null) {
                                         Text(
-                                            text = artist.name
+                                            text = artist.firstName
                                         )
                                     }
                                 }
@@ -155,6 +160,7 @@ fun MainScreen(
                                     onClick = {
                                         onDeleteButtonClicked(SelectedPhoto(
                                             photoId = item.photoId,
+                                            artistId = item.artistId,
                                             frameType = item.frameType,
                                             frameWidth = item.frameWidth,
                                             photoSize = item.photoSize,

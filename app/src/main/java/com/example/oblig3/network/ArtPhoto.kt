@@ -22,12 +22,7 @@ data class ArtCategory (
     val name: String
 )
 
-@Serializable
-data class ArtArtist(
-    val id: String,
-    val firstName: String,
-    val lastName: String
-)
+//data class Artist moved to "artClasses.kt"
 
 @Serializable
 data class ArtFrametype (

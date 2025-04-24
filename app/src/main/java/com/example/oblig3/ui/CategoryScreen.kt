@@ -24,7 +24,7 @@ import com.example.oblig3.network.ArtCategory
 
 @Composable
 fun CategoryScreen (
-    categories: List<ArtCategory>,
+    categories: List<Category>,
     onClick: (Category) -> Unit
 ) {
 
@@ -40,7 +40,7 @@ fun CategoryScreen (
                         .fillMaxWidth()
                         .padding(dimensionResource(R.dimen.padding_medium))
                         .clickable {
-                            onClick(Category.valueOf(item.name)) },
+                            onClick(item) },
                     shape = RoundedCornerShape(16.dp),
                     elevation = CardDefaults.cardElevation(
                         defaultElevation = 8.dp

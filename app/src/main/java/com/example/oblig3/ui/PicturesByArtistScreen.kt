@@ -16,17 +16,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.oblig3.data.DataSource
 import com.example.oblig3.data.Photo
+import com.example.oblig3.network.ArtPhoto
 
 @Composable
-fun PicturesByArtistScreen(
-    artistId: Long,
-    onClick: (Photo) -> Unit
+fun PicturesByArtistScreen(pictures: List<ArtPhoto>,
+                           artistId: String,
+                           onClick: (ArtPhoto) -> Unit
     ) {
-    val pictures: List<Photo> = DataSource.photosByArtist(artistId)
+    //val pictures: List<Photo> = DataSource.photosByArtist(artistId)
 
     if (pictures.isNotEmpty()) {
         LazyVerticalGrid(
@@ -52,10 +56,12 @@ fun PicturesByArtistScreen(
                             Text(
                                 text = item.title
                             )
-                            Image(
-                                painter = painterResource(item.imageResId) ,
-                                contentDescription = item.title,
-                                modifier = Modifier.fillMaxWidth(0.4f)
+                            AsyncImage(
+                                model = ImageRequest.Builder(context = LocalContext.current)
+                                    .data(item.imgSrc)
+                                    .crossfade(true)
+                                    .build(),
+                                contentDescription = item.title
                             )
                         }
                     }

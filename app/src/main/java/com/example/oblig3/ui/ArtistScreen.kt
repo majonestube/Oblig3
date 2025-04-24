@@ -20,12 +20,13 @@ import androidx.compose.ui.unit.dp
 import com.example.oblig3.R
 import com.example.oblig3.data.Artist
 import com.example.oblig3.data.DataSource
+//import com.example.oblig3.network.ArtArtist
 
 @Composable
-fun ArtistScreen (
-    onClick: (Long) -> Unit
+fun ArtistScreen (artists: List<Artist>,
+                  onClick: (String) -> Unit
 ) {
-    val artists: List<Artist> = DataSource.Artists
+    //val artists: List<Artist> = DataSource.Artists
 
     if (artists.isNotEmpty()) {
         LazyVerticalGrid(
@@ -48,10 +49,10 @@ fun ArtistScreen (
                         modifier = Modifier.padding(start = 16.dp, top = 4.dp, bottom = 4.dp)
                     ) {
                         Text(
-                            text = item.name
+                            text = item.firstName
                         )
                         Text(
-                            text = item.familyName
+                            text = item.lastName
                         )
                     }
                 }

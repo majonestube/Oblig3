@@ -1,11 +1,7 @@
 package com.example.oblig3.ui
 
-import android.telecom.Call.Details
 import android.widget.Toast
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
-import androidx.compose.foundation.content.MediaType.Companion.Text
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,47 +10,35 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
 import androidx.compose.material3.RadioButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role.Companion.Image
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.compose.currentBackStackEntryAsState
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.oblig3.R
 import com.example.oblig3.data.DataSource
 import com.example.oblig3.data.FrameSize
 import com.example.oblig3.data.FrameType
 import com.example.oblig3.data.Photo
 import com.example.oblig3.data.PhotoSize
-import com.example.oblig3.data.SelectedPhoto
+import com.example.oblig3.network.ArtPhoto
 import com.example.oblig3.ui.theme.Oblig3Theme
 
 
 @Composable
 fun Details(
-    photo: Photo,
+    photo: ArtPhoto,
     chosenFrameType: FrameType,
     chosenFrameSize: Int,
     chosenPhotoSize: PhotoSize,
@@ -63,7 +47,7 @@ fun Details(
     onChooseFrameSize: (Int) -> Unit,
     onAddPhoto: () -> Unit,
     onDoneClick: () -> Unit,
-    calculatePrice: Float
+    calculatePrice: Double
 ) {
     val context = LocalContext.current
 
@@ -85,11 +69,12 @@ fun Details(
                     shape = CutCornerShape(12.dp),
                 )
                     .padding(chosenFrameSize.dp)) {
-                    Image(
-                        painter = painterResource(photo.imageResId),
-                        contentDescription = photo.title,
-                        modifier = Modifier
-                            .fillMaxWidth(0.4f)
+                    AsyncImage(
+                        model = ImageRequest.Builder(context = LocalContext.current)
+                            .data(photo.imgSrc)
+                            .crossfade(true)
+                            .build(),
+                        contentDescription = photo.title
                     )
 
                 }

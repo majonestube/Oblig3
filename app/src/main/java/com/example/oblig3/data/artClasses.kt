@@ -2,6 +2,7 @@ package com.example.oblig3.data
 
 import androidx.annotation.DrawableRes
 import androidx.compose.ui.graphics.Color
+import kotlinx.serialization.Serializable
 
 data class Photo(
     /** Unik ID til bildet **/
@@ -14,26 +15,42 @@ data class Photo(
     val price: Float = 0.0f
 )
 
+@Serializable
+data class Artist(
+    val id: String,
+    val firstName: String,
+    val lastName: String
+)
+
+/*
 data class Artist(
     val id: Long,
     val name: String = "",
     val familyName: String = ""
-)
+)*/
 
 data class SelectedPhoto(
-    val photoId: Long,
+    val photoId: String,
+    val artistId: String,
     val frameType: FrameType,
     val frameWidth: Int,
     val photoSize: PhotoSize,
-    val photoPrice: Float = 0.0f,
+    val photoPrice: Double = 0.0,
 )
 
+@Serializable
+data class Category (
+    val id: String,
+    val name: String
+)
+
+/*
 enum class Category {
     NATURE(),
     FOOD(),
     SPORT()
 }
-
+*/
 enum class FrameType(val extraPrice: Float, val color: Color = Color.Yellow) {
     WOOD(0f, color = Color.Yellow),
     METAL(100f, color = Color.Blue),

@@ -1,7 +1,5 @@
 package com.example.oblig3.ui
 
-import android.util.Log
-import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -18,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -28,12 +25,10 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.oblig3.R
 import com.example.oblig3.data.Category
-import com.example.oblig3.data.DataSource
 import com.example.oblig3.data.FrameType
-import com.example.oblig3.data.Photo
 import com.example.oblig3.data.PhotoSize
 import com.example.oblig3.data.SelectedPhoto
-import kotlin.math.roundToInt
+import com.example.oblig3.network.ArtPhoto
 
 enum class ArtScreen (@StringRes val title: Int) {
     Start(title = R.string.main_title),
@@ -104,6 +99,14 @@ fun ArtdealerApp(
         ) {
             composable (route = ArtScreen.Start.name) {
                 MainScreen(
+                    photo = uiState.photoById,
+                    artist = uiState.artistById,
+                    getArtistById = {artistId: String ->
+                        viewModel.getArtistById(artistId)
+                    },
+                    getPhotoById = {photoId: String ->
+                        viewModel.getPhotoById(photoId)
+                    },
                     picturesChosen = uiState.picturesChosen,
                     onArtistButtonClicked = { navController.navigate(ArtScreen.Artist.name) },
                     onCategoryButtonClicked = { navController.navigate(ArtScreen.Category.name) },
@@ -117,8 +120,9 @@ fun ArtdealerApp(
             }
 
             composable (route = ArtScreen.Artist.name) {
-                ArtistScreen(
-                    onClick = {artistId: Long ->
+                viewModel.getArtists()
+                ArtistScreen(uiState.artists,
+                    onClick = {artistId: String ->
                         viewModel.setArtist(artistId)
                         navController.navigate(ArtScreen.PictureByArtist.name)
                     }
@@ -137,9 +141,10 @@ fun ArtdealerApp(
             }
 
             composable (route = ArtScreen.PictureByArtist.name) {
-                PicturesByArtistScreen(
+                viewModel.getPhotosByArtist(uiState.chosenArtist)
+                PicturesByArtistScreen(uiState.listOfPhotos,
                     artistId = uiState.chosenArtist,
-                    onClick = { photo: Photo ->
+                    onClick = { photo: ArtPhoto ->
                         viewModel.setPhoto(photo)
                         navController.navigate(ArtScreen.Details.name)
 
@@ -148,9 +153,10 @@ fun ArtdealerApp(
             }
 
             composable (route = ArtScreen.PictureByCategory.name) {
-                PicturesByCategoryScreen(
+                viewModel.getPhotosByCategory(uiState.chosenCategory.id)
+                PicturesByCategoryScreen(uiState.listOfPhotos,
                     categoryId = uiState.chosenCategory,
-                    onClick = { photo: Photo ->
+                    onClick = { photo: ArtPhoto ->
                         viewModel.setPhoto(photo)
                         navController.navigate(ArtScreen.Details.name)
                     }
@@ -176,6 +182,7 @@ fun ArtdealerApp(
                         viewModel.addPhoto(
                             SelectedPhoto(
                                 photoId = uiState.chosenPhoto.id,
+                                artistId = uiState.chosenArtist,
                                 frameType = uiState.chosenFrameMaterial,
                                 frameWidth = uiState.chosenFrameSize,
                                 photoSize = uiState.chosenPhotoSize,

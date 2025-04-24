@@ -16,6 +16,7 @@ import com.example.oblig3.data.FrameType
 import com.example.oblig3.data.Photo
 import com.example.oblig3.data.PhotoSize
 import com.example.oblig3.data.SelectedPhoto
+import com.example.oblig3.network.ArtPhoto
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -30,6 +31,26 @@ class ArtViewModel(
 ): ViewModel() {
     private val _uiState = MutableStateFlow(ArtUiState())
     val uiState: StateFlow<ArtUiState> = _uiState.asStateFlow()
+
+    fun getPhotoById(photoId: String) {
+        viewModelScope.launch {
+            _uiState.update { currentState ->
+                currentState.copy(
+                    photoById = artPhotosRepository.getPhotoById(photoId = photoId)
+                )
+            }
+        }
+    }
+
+    fun getArtistById(artistId: String) {
+        viewModelScope.launch {
+            _uiState.update { currentState ->
+                currentState.copy(
+                    artistById = artPhotosRepository.getArtistById(artistId = artistId)
+                )
+            }
+        }
+    }
 
     fun getAllPhotos() {
         viewModelScope.launch {
@@ -123,7 +144,7 @@ class ArtViewModel(
     }
 
     // Set the selected artist
-    fun setArtist(artistId: Long) {
+    fun setArtist(artistId: String) {
         _uiState.update { currentState ->
             currentState.copy(
                 chosenArtist = artistId
@@ -140,7 +161,7 @@ class ArtViewModel(
         }
     }
 
-    fun setPhoto(photo: Photo) {
+    fun setPhoto(photo: ArtPhoto) {
         _uiState.update { currentState ->
             currentState.copy(
                 chosenPhoto = photo
@@ -172,7 +193,7 @@ class ArtViewModel(
         }
     }
 
-    fun calculatePrice(): Float {
+    fun calculatePrice(): Double {
         var framePrice = 0f
         val photoPrice = uiState.value.chosenPhoto.price
         val photoSizePrice = uiState.value.chosenPhotoSize.extraPrice

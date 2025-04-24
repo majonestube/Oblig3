@@ -1,39 +1,55 @@
 package com.example.oblig3.data
 
 import com.example.oblig3.R
+import com.example.oblig3.network.ArtPhoto
+import com.example.oblig3.network.ArtPhotosize
 
 object DataSource {
     const val PHOTO_PRICE = 1000
 
-    val Artists: List<Artist> = listOf(
-        Artist(
-            id = 1,
-            name = "Martine",
-            familyName = "Vold"
-        ),
-        Artist(
-            id = 2,
-            name = "John",
-            familyName = "Smith"
-        ),
-        Artist(
-            id = 3,
-            name = "Tomas",
-            familyName = "Horvli"
-        ),
-        Artist(
-            id = 4,
-            name = "Lisa",
-            familyName = "Tønne"
-        ),
+    val defaultPhoto: ArtPhoto = ArtPhoto(
+        id = "1",
+        title = "",
+        imageThumbUrl = "",
+        imgSrc = "",
+        artistId = "",
+        categoryId = "",
+        price = 1.0
+    )
+    val defaultCategory: Category = Category(
+        id = "1",
+        name = "Default Category"
     )
 
+    val Artists: List<Artist> = listOf(
+        Artist(
+            id = "1",
+            firstName = "Martine",
+            lastName = "Vold"
+        ),
+        Artist(
+            id = "2",
+            firstName = "John",
+            lastName = "Smith"
+        ),
+        Artist(
+            id = "3",
+            firstName = "Tomas",
+            lastName = "Horvli"
+        ),
+        Artist(
+            id = "4",
+            firstName = "Lisa",
+            lastName = "Tønne"
+        ),
+    )
+/*
     val Categories: List<Category> = listOf(
         Category.NATURE,
         Category.FOOD,
         Category.SPORT
     )
-
+*/
     val PhotosForSale: List<Photo> = listOf(
         // Naturfotoer
         Photo(
@@ -41,7 +57,7 @@ object DataSource {
             title = "Wildflowers",
             imageResId = R.drawable.nature_1,
             artistId = 1,
-            category = Category.NATURE,
+            category = defaultCategory,
             price = 0.5f
         ),
         Photo(
@@ -49,7 +65,7 @@ object DataSource {
             title = "Meadow",
             imageResId = R.drawable.nature_2,
             artistId = 2,
-            category = Category.NATURE,
+            category = defaultCategory,
             price = 0.6f
         ),
         Photo(
@@ -57,7 +73,7 @@ object DataSource {
             title = "Desert",
             imageResId = R.drawable.nature_3,
             artistId = 3,
-            category = Category.NATURE,
+            category = defaultCategory,
             price = 0.2f
         ),
         Photo(
@@ -65,7 +81,7 @@ object DataSource {
             title = "Waterfall",
             imageResId = R.drawable.nature_4,
             artistId = 4,
-            category = Category.NATURE,
+            category = defaultCategory,
             price = 0.9f
         ),
         Photo(
@@ -73,7 +89,7 @@ object DataSource {
             title = "Pizza",
             imageResId = R.drawable.food_1,
             artistId = 1,
-            category = Category.FOOD,
+            category = defaultCategory,
             price = 0.5f
         ),
         Photo(
@@ -81,7 +97,7 @@ object DataSource {
             title = "Taco",
             imageResId = R.drawable.food_2,
             artistId = 3,
-            category = Category.FOOD,
+            category = defaultCategory,
             price = 0.4f
         ),
         Photo(
@@ -89,7 +105,7 @@ object DataSource {
             title = "Sandwich",
             imageResId = R.drawable.food_3,
             artistId = 4,
-            category = Category.FOOD,
+            category = defaultCategory,
             price = 0.8f
         ),
         Photo(
@@ -97,7 +113,7 @@ object DataSource {
             title = "Soccer",
             imageResId = R.drawable.sport_1,
             artistId = 2,
-            category = Category.SPORT,
+            category = defaultCategory,
             price = 1f
         ),
         Photo(
@@ -105,7 +121,7 @@ object DataSource {
             title = "Climbing color",
             imageResId = R.drawable.sport_2,
             artistId = 1,
-            category = Category.SPORT,
+            category = defaultCategory,
             price = 0.75f
         ),
         Photo(
@@ -113,7 +129,7 @@ object DataSource {
             title = "Climbing silhouette",
             imageResId = R.drawable.sport_3,
             artistId = 3,
-            category = Category.SPORT,
+            category = defaultCategory,
             price = 0.15f
         ),
         Photo(
@@ -121,7 +137,7 @@ object DataSource {
             title = "Basketball",
             imageResId = R.drawable.sport_4,
             artistId = 4,
-            category = Category.SPORT,
+            category = defaultCategory,
             price = 0.6f
         ),
         Photo(
@@ -129,7 +145,7 @@ object DataSource {
             title = "Kayak",
             imageResId = R.drawable.sport_5,
             artistId = 1,
-            category = Category.SPORT,
+            category = defaultCategory,
             price = 0.7f
         ),
         Photo(
@@ -137,7 +153,7 @@ object DataSource {
             title = "Cycling",
             imageResId = R.drawable.sport_6,
             artistId = 3,
-            category = Category.SPORT,
+            category = defaultCategory,
             price = 0.4f
         ),
     )
