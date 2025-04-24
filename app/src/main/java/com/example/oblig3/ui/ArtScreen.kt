@@ -28,7 +28,9 @@ import com.example.oblig3.data.Category
 import com.example.oblig3.data.FrameType
 import com.example.oblig3.data.PhotoSize
 import com.example.oblig3.data.SelectedPhoto
+import com.example.oblig3.data.ShoppingCartRepository
 import com.example.oblig3.network.ArtPhoto
+import kotlinx.coroutines.flow.Flow
 
 enum class ArtScreen (@StringRes val title: Int) {
     Start(title = R.string.main_title),
@@ -73,11 +75,13 @@ fun ArtdealerAppBar(
 fun ArtdealerApp(
     viewModel: ArtViewModel = viewModel(factory = ArtViewModel.Factory),
     navController: NavHostController = rememberNavController(),
-    modifier: Modifier = Modifier) {
+    modifier: Modifier = Modifier)
+{
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentScreen = ArtScreen.valueOf(
         backStackEntry?.destination?.route ?: ArtScreen.Start.name
     )
+    val shoppingCart: Flow<List<SelectedPhoto>> = viewModel.getAllSelectedPhotos()
 
     Scaffold (
         topBar = {
@@ -100,11 +104,11 @@ fun ArtdealerApp(
                 MainScreen(
                     photo = uiState.photoById,
                     artist = uiState.artistById,
-                    shoppingCart = uiState.shoppingCart,
-                    getArtistById = {artistId: String ->
+                    shoppingCart = shoppingCart,
+                    getArtistById = { artistId: String ->
                         viewModel.getArtistById(artistId)
                     },
-                    getPhotoById = {photoId: String ->
+                    getPhotoById = { photoId: String ->
                         viewModel.getPhotoById(photoId)
                     },
                     onArtistButtonClicked = { navController.navigate(ArtScreen.Artist.name) },

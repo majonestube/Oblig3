@@ -19,6 +19,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
@@ -27,17 +29,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.oblig3.R
-import com.example.oblig3.data.ArtUiState
 import com.example.oblig3.data.Artist
-import com.example.oblig3.data.DataSource
 import com.example.oblig3.data.SelectedPhoto
 import com.example.oblig3.network.ArtPhoto
+import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun MainScreen(
     photo: ArtPhoto,
     artist: Artist,
-    shoppingCart: List<SelectedPhoto>,
+    shoppingCart: Flow<List<SelectedPhoto>>,
     getPhotoById: (String) -> Unit,
     getArtistById: (String) -> Unit,
     onArtistButtonClicked: () -> Unit,
@@ -47,6 +48,7 @@ fun MainScreen(
     modifier: Modifier = Modifier,
     totalPrice: Int
 ) {
+    val cartItems by shoppingCart.collectAsState(initial = emptyList())
 
     Column(
         modifier = modifier,
@@ -90,89 +92,88 @@ fun MainScreen(
 
             }
             Text(
-                text = stringResource(R.string.antall_bilder_valgt, shoppingCart.size),
+                text = stringResource(R.string.antall_bilder_valgt, cartItems.size),
                 fontWeight = FontWeight.Bold
             )
             Text(
                 text = stringResource(R.string.totalpris_med_pris, totalPrice),
                 fontWeight = FontWeight.Bold
             )
-            if (shoppingCart.isNotEmpty()) {
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(1),
-                    modifier = Modifier
-                        .heightIn(min = 0.dp, max = LocalConfiguration.current.screenHeightDp.dp * 0.55f)
-                ) {
-                    items(shoppingCart) { item ->
-                        Card(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp)
+
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(1),
+                modifier = Modifier
+                    .heightIn(min = 0.dp, max = LocalConfiguration.current.screenHeightDp.dp * 0.55f)
+            ) {
+                items(items = cartItems, key = { it.id }) { item ->
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                    ) {
+                        Row(
+                            horizontalArrangement = Arrangement.SpaceEvenly,
+                            modifier = Modifier.fillMaxWidth()
                         ) {
-                            Row(
-                                horizontalArrangement = Arrangement.SpaceEvenly,
-                                modifier = Modifier.fillMaxWidth()
+                            Column(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .padding(4.dp)) {
+                                //val photo = DataSource.PhotosForSale.find { it.id == item.photoId }
+                                /*val artist = DataSource.Artists.find {
+                                    it.id == (photo?.artistId ?: "")
+                                }*/
+                                getPhotoById(item.photoId)
+                                getArtistById(item.artistId)
+
+                                if (photo != null) {
+                                    Text(
+                                        text = photo.title
+                                    )
+                                if (artist != null) {
+                                    Text(
+                                        text = artist.firstName
+                                    )
+                                }
+                            }
+
+                            }
+                            Column(
+                                modifier = Modifier
+                                    .weight(1f)) {
+                                Text(
+                                    text = item.frameType
+                                )
+                                Text(
+                                    text = item.photoSize.toString()
+                                )
+                            }
+                            Column(
+                                modifier = Modifier
+                                    .weight(1f)) {
+                                Text(
+                                    text = item.frameWidth.toString()
+                                )
+                                Text(
+                                    text = (item.photoPrice).toString()
+                                )
+                            }
+                            Button(
+                                onClick = {
+                                    onDeleteButtonClicked(SelectedPhoto(
+                                        photoId = item.photoId,
+                                        artistId = item.artistId,
+                                        frameType = item.frameType,
+                                        frameWidth = item.frameWidth,
+                                        photoSize = item.photoSize,
+                                        photoPrice = item.photoPrice
+                                    ))
+                                },
                             ) {
-                                Column(
-                                    modifier = Modifier
-                                        .weight(1f)
-                                        .padding(4.dp)) {
-                                    //val photo = DataSource.PhotosForSale.find { it.id == item.photoId }
-                                    /*val artist = DataSource.Artists.find {
-                                        it.id == (photo?.artistId ?: "")
-                                    }*/
-                                    getPhotoById(item.photoId)
-                                    getArtistById(item.artistId)
-
-                                    if (photo != null) {
-                                        Text(
-                                            text = photo.title
-                                        )
-                                    if (artist != null) {
-                                        Text(
-                                            text = artist.firstName
-                                        )
-                                    }
-                                }
-
-                                }
-                                Column(
-                                    modifier = Modifier
-                                        .weight(1f)) {
-                                    Text(
-                                        text = item.frameType
-                                    )
-                                    Text(
-                                        text = item.photoSize.toString()
-                                    )
-                                }
-                                Column(
-                                    modifier = Modifier
-                                        .weight(1f)) {
-                                    Text(
-                                        text = item.frameWidth.toString()
-                                    )
-                                    Text(
-                                        text = (item.photoPrice).toString()
-                                    )
-                                }
-                                Button(
-                                    onClick = {
-                                        onDeleteButtonClicked(SelectedPhoto(
-                                            photoId = item.photoId,
-                                            artistId = item.artistId,
-                                            frameType = item.frameType,
-                                            frameWidth = item.frameWidth,
-                                            photoSize = item.photoSize,
-                                            photoPrice = item.photoPrice
-                                        ))
-                                    },
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Default.Delete,
-                                        contentDescription = stringResource(R.string.delete)
-                                    )
-                                }
+                                Icon(
+                                    imageVector = Icons.Default.Delete,
+                                    contentDescription = stringResource(R.string.delete)
+                                )
                             }
                         }
                     }

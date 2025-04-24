@@ -13,24 +13,29 @@ import com.example.oblig3.data.Category
 import com.example.oblig3.data.DataSource
 import com.example.oblig3.data.FrameSize
 import com.example.oblig3.data.FrameType
-import com.example.oblig3.data.Photo
 import com.example.oblig3.data.PhotoSize
 import com.example.oblig3.data.SelectedPhoto
+import com.example.oblig3.data.ShoppingCartRepository
 import com.example.oblig3.network.ArtPhoto
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlin.math.roundToInt
 
 private const val EXTRA_PRICE = 200
 
 class ArtViewModel(
-    private val artPhotosRepository: ArtPhotosRepository
+    private val artPhotosRepository: ArtPhotosRepository,
+    private val shoppingCartRepository: ShoppingCartRepository
 ): ViewModel() {
     private val _uiState = MutableStateFlow(ArtUiState())
     val uiState: StateFlow<ArtUiState> = _uiState.asStateFlow()
+
+    fun getAllSelectedPhotos(): Flow<List<SelectedPhoto>> {
+        return shoppingCartRepository.getAllSelectedPhotosStream()
+    }
 
     fun getPhotoById(photoId: String) {
         viewModelScope.launch {
@@ -122,28 +127,22 @@ class ArtViewModel(
             }
         }
     }
-/*
+
     fun addPhoto(
         photo: SelectedPhoto) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                picturesChosen = currentState.picturesChosen + photo
-            )
+        viewModelScope.launch {
+            shoppingCartRepository.insertSelectedPhoto(photo)
         }
-        setTotalPrice()
     }
 
     fun deletePhoto(
         photo: SelectedPhoto
     ) {
-        _uiState.update { currentScreen ->
-            currentScreen.copy(
-                picturesChosen = currentScreen.picturesChosen - photo
-            )
+        viewModelScope.launch {
+            shoppingCartRepository.deleteSelectedPhoto(photo)
         }
-        setTotalPrice()
     }
-    */
+
 
 
     // Set the selected artist
@@ -245,7 +244,14 @@ class ArtViewModel(
                 } catch (e: Exception) {
                     throw IllegalStateException("Failed to get reporitory: ${e.message}")
                 }
-                ArtViewModel(artPhotosRepository = artPhotosRepository)
+                val shoppingCartRepository = try {
+                    application.container.shoppingCartRepository
+                } catch (e: Exception) {
+                    throw IllegalStateException("Failed to get reporitory: ${e.message}")
+                }
+                ArtViewModel(
+                    artPhotosRepository = artPhotosRepository,
+                    shoppingCartRepository = shoppingCartRepository)
             }
         }
     }
