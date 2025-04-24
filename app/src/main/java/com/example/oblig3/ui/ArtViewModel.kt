@@ -51,6 +51,36 @@ class ArtViewModel(
         }
     }
 
+    fun getArtists(){
+        viewModelScope.launch {
+            _uiState.update { currentState ->
+                currentState.copy(
+                    artists = artPhotosRepository.getArtists()
+                )
+            }
+        }
+    }
+
+    fun getFrametypes(){
+        viewModelScope.launch {
+            _uiState.update { currentState ->
+                currentState.copy(
+                    frameTypes = artPhotosRepository.getFrametypes()
+                )
+            }
+        }
+    }
+
+    fun getPhotosizes(){
+        viewModelScope.launch {
+            _uiState.update { currentState ->
+                currentState.copy(
+                    photosize = artPhotosRepository.getPhotosizes()
+                )
+            }
+        }
+    }
+
     fun addPhoto(
         photo: SelectedPhoto) {
         _uiState.update { currentState ->
