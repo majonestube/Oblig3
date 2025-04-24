@@ -37,8 +37,7 @@ enum class ArtScreen (@StringRes val title: Int) {
     PictureByArtist(title = R.string.bilder),
     PictureByCategory(title = R.string.bilder),
     Details(title = R.string.detaljer),
-    Payment(title = R.string.betaling),
-    Test(title = (R.string.test))
+    Payment(title = R.string.betaling)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -114,7 +113,6 @@ fun ArtdealerApp(
                         viewModel.deletePhoto(selectedPhoto)
                     },
                     onPayButtonClicked = { navController.navigate(ArtScreen.Payment.name) },
-                    onAllPhotosButtonClicked = { navController.navigate(ArtScreen.Test.name)},
                     totalPrice = uiState.totalPrice
                 )
             }
@@ -210,20 +208,6 @@ fun ArtdealerApp(
                     onClick = {
                         navController.navigate(ArtScreen.Start.name)
                     }
-                )
-            }
-
-            composable(route = ArtScreen.Test.name) {
-                //viewModel.getAllPhotos()
-                //viewModel.getPhotosByCategory("2")
-                viewModel.getPhotosByArtist("2")
-                viewModel.getPhotoById("1")
-                val list = listOf(uiState.photoById)
-                AllPicturesScreen(
-                    //uiState.allPhotos
-                    //uiState.listOfPhotos,
-                    list
-
                 )
             }
 

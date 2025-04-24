@@ -43,7 +43,6 @@ fun MainScreen(
     onCategoryButtonClicked: () -> Unit,
     onDeleteButtonClicked: (SelectedPhoto) -> Unit,
     onPayButtonClicked: () -> Unit,
-    onAllPhotosButtonClicked: () -> Unit,
     modifier: Modifier = Modifier,
     totalPrice: Int
 ) {
@@ -187,14 +186,6 @@ fun MainScreen(
                 )
             }
 
-            Button(
-                onClick = { onAllPhotosButtonClicked() },
-                modifier = Modifier.fillMaxWidth(0.9f)
-            ) {
-                Text(
-                    text = stringResource(R.string.test)
-                )
-            }
         }
 
     }
