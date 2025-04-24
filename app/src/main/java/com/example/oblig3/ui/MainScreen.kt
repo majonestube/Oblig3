@@ -27,6 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.oblig3.R
+import com.example.oblig3.data.ArtUiState
 import com.example.oblig3.data.Artist
 import com.example.oblig3.data.DataSource
 import com.example.oblig3.data.SelectedPhoto
@@ -36,9 +37,9 @@ import com.example.oblig3.network.ArtPhoto
 fun MainScreen(
     photo: ArtPhoto,
     artist: Artist,
+    shoppingCart: List<SelectedPhoto>,
     getPhotoById: (String) -> Unit,
     getArtistById: (String) -> Unit,
-    picturesChosen: List<SelectedPhoto>,
     onArtistButtonClicked: () -> Unit,
     onCategoryButtonClicked: () -> Unit,
     onDeleteButtonClicked: (SelectedPhoto) -> Unit,
@@ -89,20 +90,20 @@ fun MainScreen(
 
             }
             Text(
-                text = stringResource(R.string.antall_bilder_valgt, picturesChosen.size),
+                text = stringResource(R.string.antall_bilder_valgt, shoppingCart.size),
                 fontWeight = FontWeight.Bold
             )
             Text(
                 text = stringResource(R.string.totalpris_med_pris, totalPrice),
                 fontWeight = FontWeight.Bold
             )
-            if (picturesChosen.isNotEmpty()) {
+            if (shoppingCart.isNotEmpty()) {
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(1),
                     modifier = Modifier
                         .heightIn(min = 0.dp, max = LocalConfiguration.current.screenHeightDp.dp * 0.55f)
                 ) {
-                    items(picturesChosen) { item ->
+                    items(shoppingCart) { item ->
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -139,10 +140,10 @@ fun MainScreen(
                                     modifier = Modifier
                                         .weight(1f)) {
                                     Text(
-                                        text = item.frameType.name
+                                        text = item.frameType
                                     )
                                     Text(
-                                        text = item.photoSize.name
+                                        text = item.photoSize.toString()
                                     )
                                 }
                                 Column(

@@ -1,5 +1,6 @@
 package com.example.oblig3.data
 
+import android.content.Context
 import com.example.oblig3.network.ArtApiService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
@@ -8,9 +9,10 @@ import retrofit2.Retrofit
 
 interface AppContainer {
     val artPhotosRepository: ArtPhotosRepository
+    val shoppingCartRepository: ShoppingCartRepository
 }
 
-class DefaultAppContainer: AppContainer {
+class DefaultAppContainer(context: Context): AppContainer {
     private val BASE_URL = "http://10.0.2.2:3000/"
 
     private val retrofit = Retrofit.Builder()
@@ -25,4 +27,13 @@ class DefaultAppContainer: AppContainer {
     override val artPhotosRepository: ArtPhotosRepository by lazy {
         NetworkArtPhotosRepository(retrofitService)
     }
+
+    val shoppingCart: ShoppingCart by lazy {
+        ShoppingCart.getShoppingCart(context.applicationContext)
+    }
+
+    override val shoppingCartRepository: ShoppingCartRepository by lazy {
+        ShoppingCartRepository(shoppingCart.selectedPhotoDao())
+    }
+
 }

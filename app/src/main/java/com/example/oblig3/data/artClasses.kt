@@ -2,6 +2,8 @@ package com.example.oblig3.data
 
 import androidx.annotation.DrawableRes
 import androidx.compose.ui.graphics.Color
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.serialization.Serializable
 
 data class Photo(
@@ -29,6 +31,7 @@ data class Artist(
     val familyName: String = ""
 )*/
 
+/*
 data class SelectedPhoto(
     val photoId: String,
     val artistId: String,
@@ -37,6 +40,20 @@ data class SelectedPhoto(
     val photoSize: PhotoSize,
     val photoPrice: Double = 0.0,
 )
+*/
+
+@Entity(tableName = "selectedPhotos")
+data class SelectedPhoto (
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+    val photoId: String,
+    val artistId: String,
+    val frameType: String,
+    val frameWidth: Int,
+    val photoSize: Double,
+    val photoPrice: Double = 0.0,
+)
+
 
 @Serializable
 data class Category (

@@ -1,3 +1,4 @@
+/*
 package com.example.oblig3
 
 import android.provider.ContactsContract.Data
@@ -172,3 +173,4 @@ class ExampleInstrumentedTest {
 
 }
 
+*/

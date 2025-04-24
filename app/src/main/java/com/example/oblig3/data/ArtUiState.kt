@@ -18,7 +18,7 @@ data class ArtUiState(
     val photoById: ArtPhoto = defaultPhoto,
     val artistById: Artist = Artist("1","",""),
 
-    val picturesChosen: List<SelectedPhoto> = listOf(),
+    val shoppingCart: List<SelectedPhoto> = listOf(),
     val chosenArtist: String = "0",
     val chosenCategory: Category = defaultCategory,
     val chosenPhoto: ArtPhoto = DataSource.defaultPhoto,

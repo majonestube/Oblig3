@@ -62,6 +62,7 @@ class ArtViewModel(
         }
     }
 
+
     fun getCategories() {
         viewModelScope.launch {
             _uiState.update { currentState ->
@@ -121,7 +122,7 @@ class ArtViewModel(
             }
         }
     }
-
+/*
     fun addPhoto(
         photo: SelectedPhoto) {
         _uiState.update { currentState ->
@@ -142,6 +143,8 @@ class ArtViewModel(
         }
         setTotalPrice()
     }
+    */
+
 
     // Set the selected artist
     fun setArtist(artistId: String) {
@@ -208,6 +211,7 @@ class ArtViewModel(
         return framePrice + materialPrice + photoPrice * DataSource.PHOTO_PRICE + photoSizePrice
     }
 
+    /*
     fun setTotalPrice() {
         _uiState.update { currentState ->
             currentState.copy(
@@ -215,6 +219,7 @@ class ArtViewModel(
             )
         }
     }
+    */
 
     fun resetDetails() {
         val frameType = FrameType.entries[0]
