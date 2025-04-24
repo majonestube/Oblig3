@@ -85,7 +85,17 @@ class ArtViewModel(
         viewModelScope.launch {
             _uiState.update { currentState ->
                 currentState.copy(
-                    photosByCategory = artPhotosRepository.getPhotosByCategory(categoryId)
+                    listOfPhotos = artPhotosRepository.getPhotosByCategory(categoryId)
+                )
+            }
+        }
+    }
+
+    fun getPhotosByArtist(artistId: String){
+        viewModelScope.launch {
+            _uiState.update { currentState ->
+                currentState.copy(
+                    listOfPhotos = artPhotosRepository.getPhotosByArtist(artistId)
                 )
             }
         }

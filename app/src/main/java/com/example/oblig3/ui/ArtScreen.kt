@@ -207,11 +207,12 @@ fun ArtdealerApp(
             }
 
             composable(route = ArtScreen.Test.name) {
-                viewModel.getAllPhotos()
+                //viewModel.getAllPhotos()
                 //viewModel.getPhotosByCategory("2")
+                viewModel.getPhotosByArtist("2")
                 AllPicturesScreen(
-                    uiState.allPhotos
-                    //uiState.photosByCategory
+                    //uiState.allPhotos
+                    uiState.listOfPhotos
                 )
             }
 

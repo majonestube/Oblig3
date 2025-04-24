@@ -24,4 +24,9 @@ interface ArtApiService {
     suspend fun getPhotosByCategory(
         @Query("categoryId" ) categoryId: String
     ): List<ArtPhoto>
+
+    @GET("photos")
+    suspend fun getPhotosByArtist(
+        @Query("artistId" ) artistId: String
+    ): List<ArtPhoto>
 }
