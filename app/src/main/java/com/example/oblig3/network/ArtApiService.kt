@@ -2,6 +2,7 @@ package com.example.oblig3.network
 
 
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface ArtApiService {
     @GET("categories")
@@ -18,4 +19,9 @@ interface ArtApiService {
 
     @GET("photosizes")
     suspend fun getPhotosizes(): List<ArtPhotosize>
+
+    @GET("photos")
+    suspend fun getPhotosByCategory(
+        @Query("categoryId" ) categoryId: String
+    ): List<ArtPhoto>
 }

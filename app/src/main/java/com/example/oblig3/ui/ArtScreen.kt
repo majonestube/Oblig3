@@ -208,8 +208,10 @@ fun ArtdealerApp(
 
             composable(route = ArtScreen.Test.name) {
                 viewModel.getAllPhotos()
+                //viewModel.getPhotosByCategory("2")
                 AllPicturesScreen(
                     uiState.allPhotos
+                    //uiState.photosByCategory
                 )
             }
 

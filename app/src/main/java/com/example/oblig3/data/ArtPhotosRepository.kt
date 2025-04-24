@@ -13,6 +13,8 @@ interface ArtPhotosRepository {
     suspend fun getArtists(): List<ArtArtist>
     suspend fun getFrametypes(): List<ArtFrametype>
     suspend fun getPhotosizes(): List<ArtPhotosize>
+
+    suspend fun getPhotosByCategory(categoryId: String): List<ArtPhoto>
 }
 
 class NetworkArtPhotosRepository(
@@ -32,4 +34,7 @@ class NetworkArtPhotosRepository(
 
     override suspend fun getPhotosizes(): List<ArtPhotosize> =
         artApiService.getPhotosizes()
+
+    override suspend fun getPhotosByCategory(categoryId: String): List<ArtPhoto> =
+        artApiService.getPhotosByCategory(categoryId)
 }

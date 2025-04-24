@@ -8,6 +8,7 @@ import com.example.oblig3.network.ArtPhotosize
 
 data class ArtUiState(
     val allPhotos: List<ArtPhoto> = listOf(),
+    val photosByCategory: List<ArtPhoto> = listOf(),
     val categories: List<ArtCategory> = listOf(),
     val artists: List<ArtArtist> = listOf(),
     val frameTypes: List<ArtFrametype> = listOf(),
