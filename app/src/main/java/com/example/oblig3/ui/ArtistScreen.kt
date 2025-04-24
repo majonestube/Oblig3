@@ -32,7 +32,7 @@ fun ArtistScreen (artists: List<Artist>,
         LazyVerticalGrid(
             columns = GridCells.Fixed(1),
             modifier = Modifier
-                .heightIn(min = 0.dp, max = LocalConfiguration.current.screenHeightDp.dp * 0.55f)
+                .heightIn(min = 0.dp, max = LocalConfiguration.current.screenHeightDp.dp )
         ) {
             items(artists) { item ->
                 Card (
