@@ -103,15 +103,7 @@ fun ArtdealerApp(
             composable (route = ArtScreen.Start.name) {
                 viewModel.getTotalPrice()
                 MainScreen(
-                    photo = uiState.photoById,
-                    artist = uiState.artistById,
                     shoppingCart = shoppingCart,
-                    getArtistById = { artistId: String ->
-                        viewModel.getArtistById(artistId)
-                    },
-                    getPhotoById = { photoId: String ->
-                        viewModel.getPhotoById(photoId)
-                    },
                     onArtistButtonClicked = { navController.navigate(ArtScreen.Artist.name) },
                     onCategoryButtonClicked = { navController.navigate(ArtScreen.Category.name) },
                     onDeleteButtonClicked = { photo ->
@@ -186,6 +178,7 @@ fun ArtdealerApp(
                             SelectedPhoto(
                                 photoId = uiState.chosenPhoto.id,
                                 artistId = uiState.chosenPhoto.artistId,
+                                photoTitle = uiState.chosenPhoto.title,
                                 frameType = uiState.chosenFrameMaterial.toString(),
                                 frameWidth = uiState.chosenFrameSize,
                                 photoSize = uiState.chosenPhotoSize.toString(),

@@ -48,6 +48,7 @@ data class SelectedPhoto (
     val id: Int = 0,
     val photoId: String,
     val artistId: String,
+    val photoTitle: String,
     val frameType: String,
     val frameWidth: Int,
     val photoSize: String,

@@ -36,11 +36,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun MainScreen(
-    photo: ArtPhoto,
-    artist: Artist,
     shoppingCart: Flow<List<SelectedPhoto>>,
-    getPhotoById: (String) -> Unit,
-    getArtistById: (String) -> Unit,
     onArtistButtonClicked: () -> Unit,
     onCategoryButtonClicked: () -> Unit,
     onDeleteButtonClicked: (SelectedPhoto) -> Unit,
@@ -123,16 +119,17 @@ fun MainScreen(
                                 /*val artist = DataSource.Artists.find {
                                     it.id == (photo?.artistId ?: "")
                                 }*/
-                                getPhotoById(item.photoId)
-                                getArtistById(item.artistId)
 
-                                if (photo != null) {
+                                //getPhotoById(item.photoId)
+                                //getArtistById(item.artistId)
+
+                                if (item != null) {
                                     Text(
-                                        text = photo.title
+                                        text = item.photoTitle
                                     )
-                                if (artist != null) {
+                                if (item != null) {
                                     Text(
-                                        text = artist.firstName
+                                        text = item.artistId
                                     )
                                 }
                             }
@@ -164,6 +161,7 @@ fun MainScreen(
                                         id = item.id,
                                         photoId = item.photoId,
                                         artistId = item.artistId,
+                                        photoTitle = item.photoTitle,
                                         frameType = item.frameType,
                                         frameWidth = item.frameWidth,
                                         photoSize = item.photoSize,
