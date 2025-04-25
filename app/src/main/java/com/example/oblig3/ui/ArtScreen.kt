@@ -159,8 +159,12 @@ fun ArtdealerApp(
             }
 
             composable (route=ArtScreen.Details.name) {
+                viewModel.getFrametypes()
+                viewModel.getPhotosizes()
                 Details(
                     photo = uiState.chosenPhoto,
+                    frameTypes = uiState.frameTypes,
+                    photoSizes = uiState.photosize,
                     chosenFrameType = uiState.chosenFrameMaterial,
                     chosenFrameSize = uiState.chosenFrameSize,
                     chosenPhotoSize = uiState.chosenPhotoSize,

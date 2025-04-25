@@ -20,7 +20,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,13 +32,17 @@ import com.example.oblig3.data.FrameSize
 import com.example.oblig3.data.FrameType
 import com.example.oblig3.data.Photo
 import com.example.oblig3.data.PhotoSize
+import com.example.oblig3.network.ArtFrametype
 import com.example.oblig3.network.ArtPhoto
+import com.example.oblig3.network.ArtPhotosize
 import com.example.oblig3.ui.theme.Oblig3Theme
 
 
 @Composable
 fun Details(
     photo: ArtPhoto,
+    frameTypes: List<ArtFrametype>,
+    photoSizes: List<ArtPhotosize>,
     chosenFrameType: FrameType,
     chosenFrameSize: Int,
     chosenPhotoSize: PhotoSize,
@@ -89,7 +92,7 @@ fun Details(
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(8.dp)
         )
-        Column() {
+        Column {
 
             Row( verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
@@ -214,7 +217,7 @@ fun Details(
             )
 
         }
-        Row() {
+        Row {
             Button(
                 modifier = Modifier.weight(1f).padding(start = 8.dp, end = 4.dp),
                 onClick = {

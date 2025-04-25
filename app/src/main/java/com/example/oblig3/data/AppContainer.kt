@@ -13,11 +13,11 @@ interface AppContainer {
 }
 
 class DefaultAppContainer(context: Context): AppContainer {
-    private val BASE_URL = "http://10.0.2.2:3000/"
+    private val baseUrl = "http://10.0.2.2:3000/"
 
     private val retrofit = Retrofit.Builder()
         .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
-        .baseUrl(BASE_URL)
+        .baseUrl(baseUrl)
         .build()
 
     private val retrofitService: ArtApiService by lazy {
@@ -28,7 +28,7 @@ class DefaultAppContainer(context: Context): AppContainer {
         NetworkArtPhotosRepository(retrofitService)
     }
 
-    val shoppingCart: ShoppingCart by lazy {
+    private val shoppingCart: ShoppingCart by lazy {
         ShoppingCart.getShoppingCart(context.applicationContext)
     }
 
