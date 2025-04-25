@@ -46,7 +46,7 @@ fun MainScreen(
     onDeleteButtonClicked: (SelectedPhoto) -> Unit,
     onPayButtonClicked: () -> Unit,
     modifier: Modifier = Modifier,
-    totalPrice: Int
+    totalPrice: Double
 ) {
     val cartItems by shoppingCart.collectAsState(initial = emptyList())
 

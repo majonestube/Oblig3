@@ -17,7 +17,7 @@ import com.example.oblig3.R
 
 @Composable
 fun PaymentScreen(
-    price: Int,
+    price: Double,
     onPayButtonClicked: () -> Unit,
     onClick: () -> Unit
 ) {

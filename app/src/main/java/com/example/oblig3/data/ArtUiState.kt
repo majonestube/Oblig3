@@ -25,5 +25,5 @@ data class ArtUiState(
     val chosenFrameMaterial: FrameType = FrameType.WOOD,
     val chosenPhotoSize: PhotoSize = PhotoSize.SMALL,
     val chosenFrameSize: Int = FrameSize.SMALL.size,
-    val totalPrice: Int = 0
+    val totalPrice: Double = 0.0
 )

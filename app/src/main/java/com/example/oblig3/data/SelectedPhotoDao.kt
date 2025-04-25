@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
+import kotlinx.serialization.descriptors.PrimitiveKind
 
 @Dao
 interface SelectedPhotoDao {
@@ -18,4 +19,7 @@ interface SelectedPhotoDao {
 
     @Query("SELECT * FROM selectedPhotos")
     fun getAllSelectedPhotos(): Flow<List<SelectedPhoto>>
+
+    @Query("SELECT SUM(photoPrice) FROM selectedPhotos")
+    fun getTotalPhotoPrice(): Flow<Double>
 }

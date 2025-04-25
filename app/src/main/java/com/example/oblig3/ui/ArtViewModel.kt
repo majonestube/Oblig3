@@ -23,6 +23,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.*
+
 
 private const val EXTRA_PRICE = 200
 
@@ -207,7 +209,19 @@ class ArtViewModel(
             }
         }
 
-        return framePrice + materialPrice + photoPrice * DataSource.PHOTO_PRICE + photoSizePrice
+        return framePrice + materialPrice + photoPrice + photoSizePrice
+    }
+
+    fun getTotalPrice() {
+        viewModelScope.launch {
+            shoppingCartRepository.getTotalPhotoPrice().collect { total ->
+                _uiState.update { currentState ->
+                    currentState.copy(
+                        totalPrice = total ?: 0.0  // Default to 0.0 if null
+                    )
+                }
+            }
+        }
     }
 
     /*

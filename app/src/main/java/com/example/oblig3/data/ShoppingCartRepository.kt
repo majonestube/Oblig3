@@ -14,4 +14,8 @@ class ShoppingCartRepository(private val selectedPhotoDao: SelectedPhotoDao) {
     suspend fun deleteSelectedPhoto(selectedPhoto: SelectedPhoto) {
         selectedPhotoDao.delete(selectedPhoto)
     }
+
+    suspend fun getTotalPhotoPrice(): Flow<Double?> {
+        return selectedPhotoDao.getTotalPhotoPrice()
+    }
 }

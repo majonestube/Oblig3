@@ -101,6 +101,7 @@ fun ArtdealerApp(
             modifier = Modifier.padding(innerPadding)
         ) {
             composable (route = ArtScreen.Start.name) {
+                viewModel.getTotalPrice()
                 MainScreen(
                     photo = uiState.photoById,
                     artist = uiState.artistById,
