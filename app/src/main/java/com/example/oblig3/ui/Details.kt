@@ -1,5 +1,7 @@
 package com.example.oblig3.ui
 
+
+import android.provider.ContactsContract.Data
 import android.widget.Toast
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -18,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -38,16 +41,17 @@ import com.example.oblig3.network.ArtPhotosize
 import com.example.oblig3.ui.theme.Oblig3Theme
 
 
+@OptIn(ExperimentalStdlibApi::class)
 @Composable
 fun Details(
     photo: ArtPhoto,
     frameTypes: List<ArtFrametype>,
     photoSizes: List<ArtPhotosize>,
-    chosenFrameType: FrameType,
+    chosenFrameType: ArtFrametype,
     chosenFrameSize: Int,
     chosenPhotoSize: PhotoSize,
     onChoosePhotoSize: (PhotoSize) -> Unit,
-    onChooseFrameType: (FrameType) -> Unit,
+    onChooseFrameType: (ArtFrametype) -> Unit,
     onChooseFrameSize: (Int) -> Unit,
     onAddPhoto: () -> Unit,
     onDoneClick: () -> Unit,
@@ -66,10 +70,11 @@ fun Details(
                 Text(
                     text = photo.title
                 )
+                val color = "ff" + chosenFrameType.color.removePrefix("0x")
                 Box(modifier = Modifier.wrapContentSize()
                     .border(
                     width = chosenFrameSize.dp,
-                    brush = SolidColor(chosenFrameType.color),
+                    brush = SolidColor(Color(color.hexToInt())),
                     shape = CutCornerShape(12.dp),
                 )
                     .padding(chosenFrameSize.dp)) {
@@ -101,11 +106,14 @@ fun Details(
                 Row(verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.weight(1f)) {
                     RadioButton(
-                        selected = chosenFrameType == FrameType.WOOD,
-                        onClick = { onChooseFrameType(FrameType.WOOD)}
+                        //selected = chosenFrameType == FrameType.WOOD,
+                        //onClick = { onChooseFrameType(DFrameType.WOO)}
+                        selected = chosenFrameType == frameTypes[0],
+                        onClick = { onChooseFrameType(frameTypes[0])}
                     )
                     Text(
-                        text = stringResource(R.string.rammetype_tre),
+                        //text = stringResource(R.string.rammetype_tre),
+                        text = frameTypes[0].name,
                         modifier = Modifier.padding(end = 8.dp)
                     )
                 }
@@ -127,10 +135,10 @@ fun Details(
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.weight(1f)) {
-                    RadioButton(selected = chosenFrameType == FrameType.METAL,
-                        onClick = {onChooseFrameType(FrameType.METAL)})
+                    RadioButton(selected = chosenFrameType == frameTypes[1],
+                        onClick = {onChooseFrameType(frameTypes[1])})
                     Text(
-                        text = stringResource(R.string.rammetype_metal)
+                        text = frameTypes[1].name
                     )
                 }
 
@@ -148,10 +156,10 @@ fun Details(
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.weight(1f)) {
-                    RadioButton(selected = chosenFrameType == FrameType.PLASTIC,
-                        onClick = {onChooseFrameType(FrameType.PLASTIC)})
+                    RadioButton(selected = chosenFrameType == frameTypes[2],
+                        onClick = {onChooseFrameType(frameTypes[2])})
                     Text(
-                        text = stringResource(R.string.rammetype_plastikk)
+                        text = frameTypes[2].name
                     )
                 }
 

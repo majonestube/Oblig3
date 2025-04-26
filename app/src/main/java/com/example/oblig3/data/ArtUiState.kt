@@ -1,6 +1,7 @@
 package com.example.oblig3.data
 
 //import com.example.oblig3.network.ArtArtist
+import com.example.oblig3.data.DataSource.defaultArtFrametype
 import com.example.oblig3.data.DataSource.defaultCategory
 import com.example.oblig3.data.DataSource.defaultPhoto
 import com.example.oblig3.network.ArtFrametype
@@ -22,7 +23,7 @@ data class ArtUiState(
     val chosenArtist: String = "0",
     val chosenCategory: Category = defaultCategory,
     val chosenPhoto: ArtPhoto = defaultPhoto,
-    val chosenFrameMaterial: FrameType = FrameType.WOOD,
+    val chosenFrameMaterial: ArtFrametype = DataSource.defaultArtFrametype,
     val chosenPhotoSize: PhotoSize = PhotoSize.SMALL,
     val chosenFrameSize: Int = FrameSize.SMALL.size,
     val totalPrice: Double = 0.0

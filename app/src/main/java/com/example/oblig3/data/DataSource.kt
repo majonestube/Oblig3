@@ -1,6 +1,7 @@
 package com.example.oblig3.data
 
 import com.example.oblig3.R
+import com.example.oblig3.network.ArtFrametype
 import com.example.oblig3.network.ArtPhoto
 import com.example.oblig3.network.ArtPhotosize
 
@@ -21,6 +22,12 @@ object DataSource {
         name = "Default Category"
     )
 
+    val defaultArtFrametype: ArtFrametype = ArtFrametype(
+        id = "0",
+        name = "",
+        color = "0xFFffff",
+        extraPrice = 0.0
+    )
     val Artists: List<Artist> = listOf(
         Artist(
             id = "1",

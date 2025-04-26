@@ -29,6 +29,7 @@ import com.example.oblig3.data.FrameType
 import com.example.oblig3.data.PhotoSize
 import com.example.oblig3.data.SelectedPhoto
 import com.example.oblig3.data.ShoppingCartRepository
+import com.example.oblig3.network.ArtFrametype
 import com.example.oblig3.network.ArtPhoto
 import kotlinx.coroutines.flow.Flow
 
@@ -161,44 +162,47 @@ fun ArtdealerApp(
             composable (route=ArtScreen.Details.name) {
                 viewModel.getFrametypes()
                 viewModel.getPhotosizes()
-                Details(
-                    photo = uiState.chosenPhoto,
-                    frameTypes = uiState.frameTypes,
-                    photoSizes = uiState.photosize,
-                    chosenFrameType = uiState.chosenFrameMaterial,
-                    chosenFrameSize = uiState.chosenFrameSize,
-                    chosenPhotoSize = uiState.chosenPhotoSize,
-                    onChoosePhotoSize = { photoSize: PhotoSize ->
-                        viewModel.setPhotoSizeOption(photoSize)
-                    },
-                    onChooseFrameType = { frameType: FrameType ->
-                        viewModel.setFrameMaterialOption(frameType)
-                    },
-                    onChooseFrameSize = { frameSize: Int ->
-                        viewModel.setFrameSizeOption(frameSize)
-                    },
-                    onAddPhoto = {
-                        viewModel.addPhoto(
-                            SelectedPhoto(
-                                photoId = uiState.chosenPhoto.id,
-                                artistId = uiState.chosenPhoto.artistId,
-                                photoTitle = uiState.chosenPhoto.title,
-                                frameType = uiState.chosenFrameMaterial.toString(),
-                                frameWidth = uiState.chosenFrameSize,
-                                photoSize = uiState.chosenPhotoSize.toString(),
-                                photoPrice = viewModel.calculatePrice()
+                // TODO Istedet for if statement kan vi bruke Stateflow med loading states? (Loading, Success, Error)
+                if (uiState.frameTypes.isNotEmpty() && uiState.photosize.isNotEmpty()){
+                    Details(
+                        photo = uiState.chosenPhoto,
+                        frameTypes = uiState.frameTypes,
+                        photoSizes = uiState.photosize,
+                        chosenFrameType = uiState.chosenFrameMaterial,
+                        chosenFrameSize = uiState.chosenFrameSize,
+                        chosenPhotoSize = uiState.chosenPhotoSize,
+                        onChoosePhotoSize = { photoSize: PhotoSize ->
+                            viewModel.setPhotoSizeOption(photoSize)
+                        },
+                        onChooseFrameType = { frameType: ArtFrametype ->
+                            viewModel.setFrameMaterialOption(frameType)
+                        },
+                        onChooseFrameSize = { frameSize: Int ->
+                            viewModel.setFrameSizeOption(frameSize)
+                        },
+                        onAddPhoto = {
+                            viewModel.addPhoto(
+                                SelectedPhoto(
+                                    photoId = uiState.chosenPhoto.id,
+                                    artistId = uiState.chosenPhoto.artistId,
+                                    photoTitle = uiState.chosenPhoto.title,
+                                    frameType = uiState.chosenFrameMaterial.toString(),
+                                    frameWidth = uiState.chosenFrameSize,
+                                    photoSize = uiState.chosenPhotoSize.toString(),
+                                    photoPrice = viewModel.calculatePrice()
+                                )
                             )
-                        )
-                        viewModel.resetDetails()
-                    },
-                    onDoneClick = {
-                        if (navController.currentDestination?.route != ArtScreen.Start.name) {
-                            navController.navigate(ArtScreen.Start.name)
-                        }
-                        viewModel.resetDetails()
-                    },
-                    viewModel.calculatePrice()
-                )
+                            viewModel.resetDetails()
+                        },
+                        onDoneClick = {
+                            if (navController.currentDestination?.route != ArtScreen.Start.name) {
+                                navController.navigate(ArtScreen.Start.name)
+                            }
+                            viewModel.resetDetails()
+                        },
+                        viewModel.calculatePrice()
+                    )
+                }
             }
 
             composable(route = ArtScreen.Payment.name) {

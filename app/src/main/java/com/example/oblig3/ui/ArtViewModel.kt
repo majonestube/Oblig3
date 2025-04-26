@@ -1,5 +1,6 @@
 package com.example.oblig3.ui
 
+import android.provider.ContactsContract.Data
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
@@ -16,6 +17,7 @@ import com.example.oblig3.data.FrameType
 import com.example.oblig3.data.PhotoSize
 import com.example.oblig3.data.SelectedPhoto
 import com.example.oblig3.data.ShoppingCartRepository
+import com.example.oblig3.network.ArtFrametype
 import com.example.oblig3.network.ArtPhoto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -173,7 +175,7 @@ class ArtViewModel(
         }
     }
 
-    fun setFrameMaterialOption(option: FrameType) {
+    fun setFrameMaterialOption(option: ArtFrametype) {
         _uiState.update { currentState ->
             currentState.copy(
                 chosenFrameMaterial = option
@@ -235,7 +237,7 @@ class ArtViewModel(
     */
 
     fun resetDetails() {
-        val frameType = FrameType.entries[0]
+        val frameType = DataSource.defaultArtFrametype
         val frameSize = FrameSize.entries[0].size
         val photoSize = PhotoSize.entries[0]
 
