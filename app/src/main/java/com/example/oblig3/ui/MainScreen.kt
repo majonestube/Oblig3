@@ -97,7 +97,10 @@ fun MainScreen(
             LazyVerticalGrid(
                 columns = GridCells.Fixed(1),
                 modifier = Modifier
-                    .heightIn(min = 0.dp, max = LocalConfiguration.current.screenHeightDp.dp * 0.55f)
+                    .heightIn(
+                        min = 0.dp,
+                        max = LocalConfiguration.current.screenHeightDp.dp * 0.55f
+                    )
             ) {
                 items(items = cartItems, key = { it.id }) { item ->
                     Card(
@@ -112,7 +115,8 @@ fun MainScreen(
                             Column(
                                 modifier = Modifier
                                     .weight(1f)
-                                    .padding(4.dp)) {
+                                    .padding(4.dp)
+                            ) {
 
                                 Text(
                                     text = item.photoTitle
@@ -122,20 +126,22 @@ fun MainScreen(
                                 )
                             }
 
-                            }
                             Column(
                                 modifier = Modifier
-                                    .weight(1f)) {
+                                    .weight(1f)
+                            ) {
                                 Text(
                                     text = item.frameType
                                 )
                                 Text(
-                                    text = item.photoSize.toString()
+                                    text = item.photoSize
                                 )
                             }
+
                             Column(
                                 modifier = Modifier
-                                    .weight(1f)) {
+                                    .weight(1f)
+                            ) {
                                 Text(
                                     text = item.frameWidth.toString()
                                 )
@@ -143,18 +149,21 @@ fun MainScreen(
                                     text = (item.photoPrice).toString()
                                 )
                             }
+
                             Button(
                                 onClick = {
-                                    onDeleteButtonClicked(SelectedPhoto(
-                                        id = item.id,
-                                        photoId = item.photoId,
-                                        artistId = item.artistId,
-                                        photoTitle = item.photoTitle,
-                                        frameType = item.frameType,
-                                        frameWidth = item.frameWidth,
-                                        photoSize = item.photoSize,
-                                        photoPrice = item.photoPrice
-                                    ))
+                                    onDeleteButtonClicked(
+                                        SelectedPhoto(
+                                            id = item.id,
+                                            photoId = item.photoId,
+                                            artistId = item.artistId,
+                                            photoTitle = item.photoTitle,
+                                            frameType = item.frameType,
+                                            frameWidth = item.frameWidth,
+                                            photoSize = item.photoSize,
+                                            photoPrice = item.photoPrice
+                                        )
+                                    )
                                 },
                             ) {
                                 Icon(
@@ -162,6 +171,7 @@ fun MainScreen(
                                     contentDescription = stringResource(R.string.delete)
                                 )
                             }
+
                         }
                     }
                 }
@@ -174,8 +184,6 @@ fun MainScreen(
                     text = stringResource(R.string.til_betaling)
                 )
             }
-
         }
-
     }
-
+}
