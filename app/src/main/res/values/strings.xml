@@ -33,4 +33,5 @@
     <string name="detaljer_pris">Pris: %s</string>
     <string name="details_du_må_velge_options">Du må velge Rammetype og Bildestørrelse</string>
     <string name="test">Test</string>
+    <string name="laster">Laster...</string>
 </resources>

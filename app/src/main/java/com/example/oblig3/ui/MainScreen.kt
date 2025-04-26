@@ -130,7 +130,7 @@ fun MainScreen(
                         ) {
                             Column(
                                 modifier = Modifier
-                                    .weight(1f)
+                                    .weight(1.3f)
                                     .padding(4.dp)
                             ) {
 
@@ -138,13 +138,13 @@ fun MainScreen(
                                     text = item.photoTitle
                                 )
                                 Text(
-                                    text = artist?.lastName ?: "Loading artist..."
+                                    text = artist?.lastName ?: stringResource(R.string.laster)
                                 )
                             }
 
                             Column(
                                 modifier = Modifier
-                                    .weight(1f)
+                                    .weight(0.7f)
                             ) {
                                 Text(
                                     text = item.frameType
@@ -156,7 +156,7 @@ fun MainScreen(
 
                             Column(
                                 modifier = Modifier
-                                    .weight(1f)
+                                    .weight(0.5f)
                             ) {
                                 Text(
                                     text = item.frameWidth.toString()
