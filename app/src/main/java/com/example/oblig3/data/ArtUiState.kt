@@ -24,7 +24,7 @@ data class ArtUiState(
     val chosenCategory: Category = defaultCategory,
     val chosenPhoto: ArtPhoto = defaultPhoto,
     val chosenFrameMaterial: ArtFrametype = DataSource.defaultArtFrametype,
-    val chosenPhotoSize: PhotoSize = PhotoSize.SMALL,
+    val chosenPhotoSize: ArtPhotosize = DataSource.defaultPhotoSize,
     val chosenFrameSize: Int = FrameSize.SMALL.size,
     val totalPrice: Double = 0.0
 )

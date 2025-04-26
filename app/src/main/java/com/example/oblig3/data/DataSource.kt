@@ -28,6 +28,12 @@ object DataSource {
         color = "0xFFffff",
         extraPrice = 0.0
     )
+    val defaultPhotoSize: ArtPhotosize = ArtPhotosize(
+        id = "",
+        name = "",
+        size = 0,
+        extraPrice = 0.0
+    )
     val Artists: List<Artist> = listOf(
         Artist(
             id = "1",

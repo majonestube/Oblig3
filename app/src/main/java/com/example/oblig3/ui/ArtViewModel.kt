@@ -19,6 +19,7 @@ import com.example.oblig3.data.SelectedPhoto
 import com.example.oblig3.data.ShoppingCartRepository
 import com.example.oblig3.network.ArtFrametype
 import com.example.oblig3.network.ArtPhoto
+import com.example.oblig3.network.ArtPhotosize
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -191,7 +192,7 @@ class ArtViewModel(
         }
     }
 
-    fun setPhotoSizeOption(option: PhotoSize) {
+    fun setPhotoSizeOption(option: ArtPhotosize) {
         _uiState.update { currentState ->
             currentState.copy(
                 chosenPhotoSize = option
@@ -239,7 +240,7 @@ class ArtViewModel(
     fun resetDetails() {
         val frameType = DataSource.defaultArtFrametype
         val frameSize = FrameSize.entries[0].size
-        val photoSize = PhotoSize.entries[0]
+        val photoSize = DataSource.defaultPhotoSize
 
         setFrameMaterialOption(frameType)
         setFrameSizeOption(frameSize)

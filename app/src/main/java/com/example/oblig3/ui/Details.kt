@@ -1,7 +1,6 @@
 package com.example.oblig3.ui
 
 
-import android.provider.ContactsContract.Data
 import android.widget.Toast
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -32,9 +31,7 @@ import coil.request.ImageRequest
 import com.example.oblig3.R
 import com.example.oblig3.data.DataSource
 import com.example.oblig3.data.FrameSize
-import com.example.oblig3.data.FrameType
 import com.example.oblig3.data.Photo
-import com.example.oblig3.data.PhotoSize
 import com.example.oblig3.network.ArtFrametype
 import com.example.oblig3.network.ArtPhoto
 import com.example.oblig3.network.ArtPhotosize
@@ -49,8 +46,8 @@ fun Details(
     photoSizes: List<ArtPhotosize>,
     chosenFrameType: ArtFrametype,
     chosenFrameSize: Int,
-    chosenPhotoSize: PhotoSize,
-    onChoosePhotoSize: (PhotoSize) -> Unit,
+    chosenPhotoSize: ArtPhotosize,
+    onChoosePhotoSize: (ArtPhotosize) -> Unit,
     onChooseFrameType: (ArtFrametype) -> Unit,
     onChooseFrameSize: (Int) -> Unit,
     onAddPhoto: () -> Unit,
@@ -120,10 +117,14 @@ fun Details(
                 Row(verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.weight(1f)) {
                     RadioButton(
-                        selected = chosenPhotoSize == PhotoSize.SMALL,
-                        onClick = {onChoosePhotoSize(PhotoSize.SMALL)})
+                        //selected = chosenPhotoSize == PhotoSize.SMALL,
+                        //onClick = {onChoosePhotoSize(PhotoSize.SMALL)})
+                        selected = chosenPhotoSize == photoSizes[0],
+                        onClick = {onChoosePhotoSize(photoSizes[0])}
+                    )
                     Text(
-                        text = stringResource(R.string.bildestørrelse_liten)
+                        //text = stringResource(R.string.bildestørrelse_liten)
+                        text = photoSizes[0].name
                     )
                 }
 
@@ -144,10 +145,11 @@ fun Details(
 
                 Row(verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.weight(1f)) {
-                    RadioButton(selected = chosenPhotoSize == PhotoSize.MEDIUM,
-                        onClick = {onChoosePhotoSize(PhotoSize.MEDIUM)})
+                    RadioButton(
+                        selected = chosenPhotoSize == photoSizes[1],
+                        onClick = {onChoosePhotoSize(photoSizes[1])})
                     Text(
-                        text = stringResource(R.string.bildestørrelse_medium)
+                        text = photoSizes[1].name
                     )
                 }
             }
@@ -165,10 +167,11 @@ fun Details(
 
                 Row(verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.weight(1f)) {
-                    RadioButton(selected = chosenPhotoSize == PhotoSize.LARGE,
-                        onClick = {onChoosePhotoSize(PhotoSize.LARGE)})
+                    RadioButton(
+                        selected = chosenPhotoSize == photoSizes[2],
+                        onClick = {onChoosePhotoSize(photoSizes[2])})
                     Text(
-                        text = stringResource(R.string.bildestørrelse_stor)
+                        text = photoSizes[2].name
                     )
                 }
             }
@@ -229,10 +232,18 @@ fun Details(
             Button(
                 modifier = Modifier.weight(1f).padding(start = 8.dp, end = 4.dp),
                 onClick = {
-                    onAddPhoto()
-                    Toast.makeText(context,
-                        context.getString(R.string.lagt_i_handlekurv), Toast.LENGTH_SHORT).show()
-                    onDoneClick()
+                    if (chosenFrameType == DataSource.defaultArtFrametype || chosenPhotoSize == DataSource.defaultPhotoSize) {
+
+                        Toast.makeText(context,
+                            context.getString(R.string.details_du_må_velge_options), Toast.LENGTH_LONG).show()
+
+                    } else {
+                        onAddPhoto()
+                        Toast.makeText(context,
+                            context.getString(R.string.lagt_i_handlekurv), Toast.LENGTH_SHORT).show()
+                        onDoneClick()
+                    }
+
                 }
             ) {
                 Text(

@@ -31,6 +31,7 @@ import com.example.oblig3.data.SelectedPhoto
 import com.example.oblig3.data.ShoppingCartRepository
 import com.example.oblig3.network.ArtFrametype
 import com.example.oblig3.network.ArtPhoto
+import com.example.oblig3.network.ArtPhotosize
 import kotlinx.coroutines.flow.Flow
 
 enum class ArtScreen (@StringRes val title: Int) {
@@ -171,7 +172,7 @@ fun ArtdealerApp(
                         chosenFrameType = uiState.chosenFrameMaterial,
                         chosenFrameSize = uiState.chosenFrameSize,
                         chosenPhotoSize = uiState.chosenPhotoSize,
-                        onChoosePhotoSize = { photoSize: PhotoSize ->
+                        onChoosePhotoSize = { photoSize: ArtPhotosize ->
                             viewModel.setPhotoSizeOption(photoSize)
                         },
                         onChooseFrameType = { frameType: ArtFrametype ->
@@ -186,9 +187,9 @@ fun ArtdealerApp(
                                     photoId = uiState.chosenPhoto.id,
                                     artistId = uiState.chosenPhoto.artistId,
                                     photoTitle = uiState.chosenPhoto.title,
-                                    frameType = uiState.chosenFrameMaterial.toString(),
+                                    frameType = uiState.chosenFrameMaterial.name,
                                     frameWidth = uiState.chosenFrameSize,
-                                    photoSize = uiState.chosenPhotoSize.toString(),
+                                    photoSize = uiState.chosenPhotoSize.name,
                                     photoPrice = viewModel.calculatePrice()
                                 )
                             )
