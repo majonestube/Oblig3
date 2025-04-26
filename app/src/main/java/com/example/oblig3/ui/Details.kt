@@ -29,26 +29,26 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.oblig3.R
-import com.example.oblig3.data.DataSource
 import com.example.oblig3.data.FrameSize
+import com.example.oblig3.data.Frametype
 import com.example.oblig3.data.Photo
-import com.example.oblig3.network.ArtFrametype
-import com.example.oblig3.network.ArtPhoto
-import com.example.oblig3.network.ArtPhotosize
+import com.example.oblig3.data.Photosize
+import com.example.oblig3.data.defaultArtFrametype
+import com.example.oblig3.data.defaultPhotoSize
 import com.example.oblig3.ui.theme.Oblig3Theme
 
 
 @OptIn(ExperimentalStdlibApi::class)
 @Composable
 fun Details(
-    photo: ArtPhoto,
-    frameTypes: List<ArtFrametype>,
-    photoSizes: List<ArtPhotosize>,
-    chosenFrameType: ArtFrametype,
+    photo: Photo,
+    frameTypes: List<Frametype>,
+    photoSizes: List<Photosize>,
+    chosenFrameType: Frametype,
     chosenFrameSize: Int,
-    chosenPhotoSize: ArtPhotosize,
-    onChoosePhotoSize: (ArtPhotosize) -> Unit,
-    onChooseFrameType: (ArtFrametype) -> Unit,
+    chosenPhotoSize: Photosize,
+    onChoosePhotoSize: (Photosize) -> Unit,
+    onChooseFrameType: (Frametype) -> Unit,
     onChooseFrameSize: (Int) -> Unit,
     onAddPhoto: () -> Unit,
     onDoneClick: () -> Unit,
@@ -117,13 +117,10 @@ fun Details(
                 Row(verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.weight(1f)) {
                     RadioButton(
-                        //selected = chosenPhotoSize == PhotoSize.SMALL,
-                        //onClick = {onChoosePhotoSize(PhotoSize.SMALL)})
                         selected = chosenPhotoSize == photoSizes[0],
                         onClick = {onChoosePhotoSize(photoSizes[0])}
                     )
                     Text(
-                        //text = stringResource(R.string.bildestørrelse_liten)
                         text = photoSizes[0].name
                     )
                 }
@@ -232,7 +229,7 @@ fun Details(
             Button(
                 modifier = Modifier.weight(1f).padding(start = 8.dp, end = 4.dp),
                 onClick = {
-                    if (chosenFrameType == DataSource.defaultArtFrametype || chosenPhotoSize == DataSource.defaultPhotoSize) {
+                    if (chosenFrameType == defaultArtFrametype || chosenPhotoSize == defaultPhotoSize) {
 
                         Toast.makeText(context,
                             context.getString(R.string.details_du_må_velge_options), Toast.LENGTH_LONG).show()
@@ -259,14 +256,3 @@ fun Details(
     }
 }
 
-
-@Composable
-@Preview //In ArtScreen.kt -> ArtDealerApp -> NavHost, edit startDestination from "Start" to "Details"
-fun DetailsPreview(
-    photo: Photo = DataSource.PhotosForSale[0]
-){
-    Oblig3Theme(dynamicColor = false)  {
-        ArtdealerApp(
-            modifier = Modifier.fillMaxSize())
-    }
-}

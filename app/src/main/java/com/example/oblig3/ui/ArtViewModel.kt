@@ -1,6 +1,5 @@
 package com.example.oblig3.ui
 
-import android.provider.ContactsContract.Data
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
@@ -11,25 +10,21 @@ import com.example.oblig3.ArtPhotosApplication
 import com.example.oblig3.data.ArtPhotosRepository
 import com.example.oblig3.data.ArtUiState
 import com.example.oblig3.data.Category
-import com.example.oblig3.data.DataSource
 import com.example.oblig3.data.FrameSize
-import com.example.oblig3.data.FrameType
-import com.example.oblig3.data.PhotoSize
+import com.example.oblig3.data.Frametype
+import com.example.oblig3.data.Photo
+import com.example.oblig3.data.Photosize
 import com.example.oblig3.data.SelectedPhoto
 import com.example.oblig3.data.ShoppingCartRepository
-import com.example.oblig3.network.ArtFrametype
-import com.example.oblig3.network.ArtPhoto
-import com.example.oblig3.network.ArtPhotosize
+import com.example.oblig3.data.defaultArtFrametype
+import com.example.oblig3.data.defaultPhoto
+import com.example.oblig3.data.defaultPhotoSize
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.flow.*
-
-
-private const val EXTRA_PRICE = 200
 
 class ArtViewModel(
     private val artPhotosRepository: ArtPhotosRepository,
@@ -38,38 +33,9 @@ class ArtViewModel(
     private val _uiState = MutableStateFlow(ArtUiState())
     val uiState: StateFlow<ArtUiState> = _uiState.asStateFlow()
 
+
     fun getAllSelectedPhotos(): Flow<List<SelectedPhoto>> {
         return shoppingCartRepository.getAllSelectedPhotosStream()
-    }
-
-    fun getPhotoById(photoId: String) {
-        viewModelScope.launch {
-            _uiState.update { currentState ->
-                currentState.copy(
-                    photoById = artPhotosRepository.getPhotoById(photoId = photoId)[0]
-                )
-            }
-        }
-    }
-
-    fun getArtistById(artistId: String) {
-        viewModelScope.launch {
-            _uiState.update { currentState ->
-                currentState.copy(
-                    artistById = artPhotosRepository.getArtistById(artistId = artistId)[0]
-                )
-            }
-        }
-    }
-
-    fun getAllPhotos() {
-        viewModelScope.launch {
-            _uiState.update { currentState ->
-                currentState.copy(
-                    allPhotos = artPhotosRepository.getArtPhotos()
-                )
-            }
-        }
     }
 
 
@@ -168,7 +134,7 @@ class ArtViewModel(
         }
     }
 
-    fun setPhoto(photo: ArtPhoto) {
+    fun setPhoto(photo: Photo) {
         _uiState.update { currentState ->
             currentState.copy(
                 chosenPhoto = photo
@@ -176,7 +142,7 @@ class ArtViewModel(
         }
     }
 
-    fun setFrameMaterialOption(option: ArtFrametype) {
+    fun setFrameMaterialOption(option: Frametype) {
         _uiState.update { currentState ->
             currentState.copy(
                 chosenFrameMaterial = option
@@ -192,7 +158,7 @@ class ArtViewModel(
         }
     }
 
-    fun setPhotoSizeOption(option: ArtPhotosize) {
+    fun setPhotoSizeOption(option: Photosize) {
         _uiState.update { currentState ->
             currentState.copy(
                 chosenPhotoSize = option
@@ -227,21 +193,14 @@ class ArtViewModel(
         }
     }
 
-    /*
-    fun setTotalPrice() {
-        _uiState.update { currentState ->
-            currentState.copy(
-                totalPrice = uiState.value.picturesChosen.sumOf { it.photoPrice.toDouble() }.roundToInt()
-            )
-        }
-    }
-    */
 
     fun resetDetails() {
-        val frameType = DataSource.defaultArtFrametype
+        val photo = defaultPhoto
+        val frameType =  defaultArtFrametype
         val frameSize = FrameSize.entries[0].size
-        val photoSize = DataSource.defaultPhotoSize
+        val photoSize = defaultPhotoSize
 
+        setPhoto(photo)
         setFrameMaterialOption(frameType)
         setFrameSizeOption(frameSize)
         setPhotoSizeOption(photoSize)

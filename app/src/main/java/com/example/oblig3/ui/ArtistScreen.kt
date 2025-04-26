@@ -19,8 +19,6 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
 import com.example.oblig3.R
 import com.example.oblig3.data.Artist
-import com.example.oblig3.data.DataSource
-//import com.example.oblig3.network.ArtArtist
 
 @Composable
 fun ArtistScreen (artists: List<Artist>,

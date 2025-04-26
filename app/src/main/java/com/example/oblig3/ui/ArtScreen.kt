@@ -25,13 +25,10 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.oblig3.R
 import com.example.oblig3.data.Category
-import com.example.oblig3.data.FrameType
-import com.example.oblig3.data.PhotoSize
+import com.example.oblig3.data.Frametype
+import com.example.oblig3.data.Photo
+import com.example.oblig3.data.Photosize
 import com.example.oblig3.data.SelectedPhoto
-import com.example.oblig3.data.ShoppingCartRepository
-import com.example.oblig3.network.ArtFrametype
-import com.example.oblig3.network.ArtPhoto
-import com.example.oblig3.network.ArtPhotosize
 import kotlinx.coroutines.flow.Flow
 
 enum class ArtScreen (@StringRes val title: Int) {
@@ -140,8 +137,7 @@ fun ArtdealerApp(
             composable (route = ArtScreen.PictureByArtist.name) {
                 viewModel.getPhotosByArtist(uiState.chosenArtist)
                 PicturesByArtistScreen(uiState.listOfPhotos,
-                    artistId = uiState.chosenArtist,
-                    onClick = { photo: ArtPhoto ->
+                    onClick = { photo: Photo ->
                         viewModel.setPhoto(photo)
                         navController.navigate(ArtScreen.Details.name)
 
@@ -153,7 +149,7 @@ fun ArtdealerApp(
                 viewModel.getPhotosByCategory(uiState.chosenCategory.id)
                 PicturesByCategoryScreen(uiState.listOfPhotos,
                     categoryId = uiState.chosenCategory,
-                    onClick = { photo: ArtPhoto ->
+                    onClick = { photo: Photo ->
                         viewModel.setPhoto(photo)
                         navController.navigate(ArtScreen.Details.name)
                     }
@@ -172,10 +168,10 @@ fun ArtdealerApp(
                         chosenFrameType = uiState.chosenFrameMaterial,
                         chosenFrameSize = uiState.chosenFrameSize,
                         chosenPhotoSize = uiState.chosenPhotoSize,
-                        onChoosePhotoSize = { photoSize: ArtPhotosize ->
+                        onChoosePhotoSize = { photoSize: Photosize ->
                             viewModel.setPhotoSizeOption(photoSize)
                         },
-                        onChooseFrameType = { frameType: ArtFrametype ->
+                        onChooseFrameType = { frameType: Frametype ->
                             viewModel.setFrameMaterialOption(frameType)
                         },
                         onChooseFrameSize = { frameSize: Int ->

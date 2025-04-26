@@ -1,7 +1,5 @@
 package com.example.oblig3.ui
 
-import android.nfc.Tag
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,7 +8,6 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
@@ -20,21 +17,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.LinkAnnotation
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.oblig3.data.Category
-import com.example.oblig3.data.DataSource
 import com.example.oblig3.data.Photo
-import com.example.oblig3.network.ArtPhoto
 
 @Composable
-fun PicturesByCategoryScreen(pictures: List<ArtPhoto>,
+fun PicturesByCategoryScreen(pictures: List<Photo>,
     categoryId: Category,
-    onClick: (ArtPhoto) -> Unit
+    onClick: (Photo) -> Unit
 ) {
     //val pictures: List<Photo> = DataSource.photosByCategory(categoryId)
 

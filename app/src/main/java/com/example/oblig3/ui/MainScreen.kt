@@ -29,9 +29,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.oblig3.R
-import com.example.oblig3.data.Artist
 import com.example.oblig3.data.SelectedPhoto
-import com.example.oblig3.network.ArtPhoto
 import kotlinx.coroutines.flow.Flow
 
 @Composable
@@ -115,23 +113,13 @@ fun MainScreen(
                                 modifier = Modifier
                                     .weight(1f)
                                     .padding(4.dp)) {
-                                //val photo = DataSource.PhotosForSale.find { it.id == item.photoId }
-                                /*val artist = DataSource.Artists.find {
-                                    it.id == (photo?.artistId ?: "")
-                                }*/
 
-                                //getPhotoById(item.photoId)
-                                //getArtistById(item.artistId)
-
-                                if (item != null) {
-                                    Text(
-                                        text = item.photoTitle
-                                    )
-                                if (item != null) {
-                                    Text(
-                                        text = item.artistId
-                                    )
-                                }
+                                Text(
+                                    text = item.photoTitle
+                                )
+                                Text(
+                                    text = item.artistId
+                                )
                             }
 
                             }
@@ -190,4 +178,4 @@ fun MainScreen(
         }
 
     }
-}
+
