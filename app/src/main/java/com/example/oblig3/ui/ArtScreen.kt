@@ -102,6 +102,7 @@ fun ArtdealerApp(
             composable (route = ArtScreen.Start.name) {
                 viewModel.getTotalPrice()
                 MainScreen(
+                    viewModel = viewModel,
                     shoppingCart = shoppingCart,
                     onArtistButtonClicked = { navController.navigate(ArtScreen.Artist.name) },
                     onCategoryButtonClicked = { navController.navigate(ArtScreen.Category.name) },

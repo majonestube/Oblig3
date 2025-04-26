@@ -9,6 +9,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.oblig3.ArtPhotosApplication
 import com.example.oblig3.data.ArtPhotosRepository
 import com.example.oblig3.data.ArtUiState
+import com.example.oblig3.data.Artist
 import com.example.oblig3.data.Category
 import com.example.oblig3.data.FrameSize
 import com.example.oblig3.data.Frametype
@@ -38,6 +39,13 @@ class ArtViewModel(
         return shoppingCartRepository.getAllSelectedPhotosStream()
     }
 
+    private val artistCache = mutableMapOf<String, Artist>()
+
+    suspend fun getArtistCached(id: String): Artist {
+        return artistCache[id] ?: artPhotosRepository.getArtistById(id).first().also {
+            artistCache[id] = it
+        }
+    }
 
     fun getCategories() {
         viewModelScope.launch {

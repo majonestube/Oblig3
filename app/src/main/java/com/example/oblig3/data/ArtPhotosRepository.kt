@@ -42,6 +42,7 @@ class NetworkArtPhotosRepository(
     override suspend fun getPhotoById(photoId: String): List<Photo> =
         artApiService.getPhotoById(photoId)
 
-    override suspend fun getArtistById(artistId: String): List<Artist> =
-        artApiService.getArtistById(artistId)
+    override suspend fun getArtistById(artistId: String): List<Artist> {
+        return artApiService.getArtistById(artistId)
+    }
 }

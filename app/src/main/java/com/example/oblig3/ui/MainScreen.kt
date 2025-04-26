@@ -19,8 +19,12 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
@@ -28,12 +32,19 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.oblig3.R
+import com.example.oblig3.data.ArtPhotosRepository
+import com.example.oblig3.data.Artist
+import com.example.oblig3.data.NetworkArtPhotosRepository
 import com.example.oblig3.data.SelectedPhoto
+import com.example.oblig3.data.ShoppingCart
+import com.example.oblig3.network.ArtApiService
 import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun MainScreen(
+    viewModel: ArtViewModel,
     shoppingCart: Flow<List<SelectedPhoto>>,
     onArtistButtonClicked: () -> Unit,
     onCategoryButtonClicked: () -> Unit,
@@ -103,6 +114,11 @@ fun MainScreen(
                     )
             ) {
                 items(items = cartItems, key = { it.id }) { item ->
+                    var artist by remember { mutableStateOf<Artist?>(null) }
+
+                    LaunchedEffect(item.artistId) {
+                        artist = viewModel.getArtistCached(item.artistId)
+                    }
                     Card(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -122,7 +138,7 @@ fun MainScreen(
                                     text = item.photoTitle
                                 )
                                 Text(
-                                    text = item.artistId
+                                    text = artist?.lastName ?: "Loading artist..."
                                 )
                             }
 
